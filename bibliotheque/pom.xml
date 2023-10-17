@@ -14,7 +14,7 @@
     <!-- Le code source en UTF8 -->
     <project.build.sourceEnconding>UTF8</project.build.sourceEnconding>
     <!-- Nom de la classe principale -->
-    <project.main.classname>${project.groupId}.${project.artifactId}.Launcher</project.main.classname>
+    <project.main.classname>${project.groupId}.Launcher</project.main.classname>
     <!-- Nom de la classe principale -->
     <project.bin.appname>run</project.bin.appname>
   </properties>
