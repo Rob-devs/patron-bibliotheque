@@ -7,17 +7,12 @@
   <groupId>ul.miage.patron</groupId>
   <artifactId>bibliotheque</artifactId>
   <version>1.0-SNAPSHOT</version>
-
-  <name>bibliotheque</name>
+  <name>${project.artifactId}</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
     <!-- Le code source en UTF8 -->
     <project.build.sourceEnconding>UTF8</project.build.sourceEnconding>
-    <!-- OÃ¹ stocker la distribution binaire -->
-    <projet.bindist.dir>${project.basedir}/bindist</projet.bindist.dir>
     <!-- Nom de la classe principale -->
     <project.main.classname>${project.groupId}.${project.artifactId}.Launcher</project.main.classname>
     <!-- Nom de la classe principale -->
@@ -25,38 +20,30 @@
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>22-ea+11</version>
+      <version>11</version>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>22-ea+11</version>
+      <version>11</version>
       <classifier>win</classifier>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>22-ea+11</version>
+      <version>11</version>
       <classifier>mac</classifier>
     </dependency>
 
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>22-ea+11</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx</artifactId>
-      <version>22-ea+11</version>
-      <type>pom</type>
+      <version>11</version>
     </dependency>
 
     <dependency>
@@ -99,28 +86,6 @@
             <goals>
               <goal>assemble</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <!-- create a distribution archive -->
-        <!-- mvn install ou assemble:single -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <id>make-zip</id>
-            <phase>install</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>zip.xml</descriptor>
-              </descriptors>
-              <appendAssemblyId>true</appendAssemblyId>
-            </configuration>
           </execution>
         </executions>
       </plugin>
