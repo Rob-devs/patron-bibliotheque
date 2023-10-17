@@ -58,12 +58,6 @@ public class Controller {
 				preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} finally {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			}
 		}
 	}
