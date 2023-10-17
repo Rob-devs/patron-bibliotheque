@@ -1,5 +1,8 @@
 package ul.miage.patron;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -19,11 +22,10 @@ public class Controller {
 	TextField tfNom, tfPrenom;
 	@FXML
 	ListView<User> listViewUsers;
-	
+
 	final Logger LOG = Logger.getLogger(App.class.getName());
 	ObservableList<User> users = FXCollections.observableArrayList();
-	
-	
+
 	public void initialize() {
 		LOG.info("Initialisation du contrôleur");
 		listViewUsers.setItems(users);
@@ -41,9 +43,28 @@ public class Controller {
 		});
 	}
 
-	public void addUser(){
+	public void addUser() {
 		users.add(new User(tfNom.getText(), tfPrenom.getText()));
-		LOG.info("Ajout de l'utilisateur "+tfNom.getText()+" "+tfPrenom.getText());
-		LOG.info("Nombre d'utilisateurs : "+users.size());
+		LOG.info("Ajout de l'utilisateur " + tfNom.getText() + " " + tfPrenom.getText());
+		LOG.info("Nombre d'utilisateurs : " + users.size());
+
+		Connection connection = SQLiteConnection.connect();
+		if (connection != null) {
+			try {
+				String insertQuery = "INSERT INTO User (nom, prenom) VALUES (?, ?)";
+				PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+				preparedStatement.setString(1, tfNom.getText());
+				preparedStatement.setString(2, tfPrenom.getText());
+				preparedStatement.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
