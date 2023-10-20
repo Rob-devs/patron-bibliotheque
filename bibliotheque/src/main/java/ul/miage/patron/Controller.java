@@ -3,7 +3,6 @@ package ul.miage.patron;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -13,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import ul.miage.patron.User;
 
 public class Controller {
 	// Eléments de l'interface JavaFX
