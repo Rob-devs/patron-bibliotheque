@@ -2,37 +2,45 @@ package ul.miage.patron.database.helpers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import ul.miage.patron.database.SQLiteConnection;
 import ul.miage.patron.model.Usager;
 
 public class HelperUsager {
 
-    public void selectAllUsager(){
+    public ResultSet selectAllUsager(){
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
                 String selectQuery = "SELECT * FROM usager";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                 preparedStatement.executeQuery();
+                ResultSet resultSet = preparedStatement.getResultSet();
+                return resultSet;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 
-    public void selectUsager(){
+    public ResultSet selectUsager(){
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
                 String selectQuery = "SELECT * FROM usager WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                 preparedStatement.executeQuery();
+                ResultSet resultSet = preparedStatement.getResultSet();
+                return resultSet;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 
     public void insertUsager(Usager usager){

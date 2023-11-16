@@ -48,7 +48,8 @@ public class Usager {
         this.telephone = telephone;
     }
 
-    public Usager(String name, String surname, String email, int telephone) {
+    public Usager(int id, String name, String surname, String email, int telephone) {
+        this.id = id;
         this.prenom = name;
         this.nom = surname;
         this.email = email;
