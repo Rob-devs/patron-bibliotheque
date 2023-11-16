@@ -1,9 +1,20 @@
 package ul.miage.patron.model;
 public class Usager {
+    private int id;
     private String prenom;
     private String nom;
     private String email;
     private int telephone;
+    private int penalites = 0;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public String getNom() {
         return nom;
@@ -42,6 +53,14 @@ public class Usager {
         this.nom = surname;
         this.email = email;
         this.telephone = telephone;
+    }
+
+    public int getPenalites() {
+        return penalites;
+    }
+
+    public void setPenalites(int penalites) {
+        this.penalites = penalites;
     }
 
     // TODO : fonction statique de recherche d'usager par nom

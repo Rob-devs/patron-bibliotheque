@@ -4,10 +4,21 @@ import ul.miage.patron.model.enumerations.EtatEmprunt;
 import ul.miage.patron.utilities.Date;
 
 public class Emprunt {
+    private int id;
     private Date dateDebut;
     private Date dateRendu;
     private Date dateRenduReelle;
     private EtatEmprunt etat;
+    private Exemplaire exemplaire;
+    private Usager usager;
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public Date getDateDebut() {
         return dateDebut;
@@ -38,6 +49,19 @@ public class Emprunt {
         this.dateDebut = dateDebut;
         this.dateRendu = dateRendu;
         this.etat = EtatEmprunt.EN_COURS;
+    }
+
+    public Exemplaire getExemplaire() {
+        return exemplaire;
+    }
+    public void setExemplaire(Exemplaire exemplaire) {
+        this.exemplaire = exemplaire;
+    }
+    public Usager getUsager() {
+        return usager;
+    }
+    public void setUsager(Usager usager) {
+        this.usager = usager;
     }
 
     public void rendre() {

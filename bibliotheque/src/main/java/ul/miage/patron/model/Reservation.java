@@ -4,10 +4,33 @@ import ul.miage.patron.model.enumerations.EtatReservation;
 import ul.miage.patron.utilities.Date;
 
 public class Reservation {
+    private int id;
     private Date dateDebut;
     private Date dateFin;
     private EtatReservation etat;
+    private Oeuvre oeuvre;
+    private Usager usager;
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public Oeuvre getOeuvre() {
+        return oeuvre;
+    }
+    public void setOeuvre(Oeuvre oeuvre) {
+        this.oeuvre = oeuvre;
+    }
+    public Usager getUsager() {
+        return usager;
+    }
+    public void setUsager(Usager usager) {
+        this.usager = usager;
+    }
     public Date getDateDebut() {
         return dateDebut;
     }

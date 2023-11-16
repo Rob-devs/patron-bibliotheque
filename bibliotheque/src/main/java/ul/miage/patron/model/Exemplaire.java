@@ -6,6 +6,15 @@ public class Exemplaire {
     private int id;
     private EtatExemplaire etat;
     private boolean disponible;
+    private Oeuvre oeuvre;
+
+    public Oeuvre getOeuvre() {
+        return oeuvre;
+    }
+
+    public void setOeuvre(Oeuvre oeuvre) {
+        this.oeuvre = oeuvre;
+    }
 
     public int getId() {
         return id;
