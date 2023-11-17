@@ -46,7 +46,7 @@ public class ControllerUsager {
         HelperUsager helperUsager = new HelperUsager();
         ResultSet resultSet = helperUsager.selectAllUsager();
         try {
-            for(int i = 0; i < resultSet.getFetchSize(); i++){
+            while(resultSet.next()){
                 int id = resultSet.getInt("id");
                 String email = resultSet.getString("email");
                 String nom = resultSet.getString("nom");
