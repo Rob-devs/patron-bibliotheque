@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import ul.miage.patron.database.helpers.HelperUsager;
@@ -24,16 +25,28 @@ public class ControllerUsager {
 
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
 
-    public void initialize(){
+    public void initialize() {
         getAllUsager();
-        listViewUsager.setItems(usagers);
-    }
+		listViewUsager.setItems(usagers);
+		listViewUsager.setCellFactory(lv -> new ListCell<Usager>() {
+			@Override
+			public void updateItem(Usager item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty) {
+					setText(null);
+				} else {
+					String text = item.getNom() + " " + item.getPrenom();
+					setText(text);
+				}
+			}
+		});
+	}
 
     public void getAllUsager(){
         HelperUsager helperUsager = new HelperUsager();
         ResultSet resultSet = helperUsager.selectAllUsager();
         try {
-            while(resultSet.next()){
+            for(int i = 0; i < resultSet.getFetchSize(); i++){
                 int id = resultSet.getInt("id");
                 String email = resultSet.getString("email");
                 String nom = resultSet.getString("nom");

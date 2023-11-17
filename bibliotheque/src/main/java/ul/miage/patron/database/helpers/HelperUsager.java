@@ -15,9 +15,9 @@ public class HelperUsager {
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
-                String selectQuery = "SELECT * FROM usager";
+                String selectQuery = "SELECT * FROM Usager";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-                preparedStatement.executeQuery();
+                preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getResultSet();
                 return resultSet;
             } catch (SQLException e) {
@@ -31,7 +31,7 @@ public class HelperUsager {
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
-                String selectQuery = "SELECT * FROM usager WHERE id = ?";
+                String selectQuery = "SELECT * FROM Usager WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                 preparedStatement.executeQuery();
                 ResultSet resultSet = preparedStatement.getResultSet();
@@ -53,7 +53,7 @@ public class HelperUsager {
                 preparedStatement.setString(1, usager.getNom());
                 preparedStatement.setString(2, usager.getPrenom());
                 preparedStatement.setInt(3, usager.getTelephone());
-                preparedStatement.executeQuery();
+                preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -71,7 +71,7 @@ public class HelperUsager {
                 preparedStatement.setString(2, usager.getPrenom());
                 preparedStatement.setInt(3, usager.getTelephone());
                 preparedStatement.setInt(4, usager.getId());
-                preparedStatement.executeQuery();
+                preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -85,7 +85,7 @@ public class HelperUsager {
                 String deleteQuery = "DELETE FROM usager WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
                 preparedStatement.setInt(0, usager.getId());
-                preparedStatement.executeQuery();
+                preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

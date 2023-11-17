@@ -1,4 +1,4 @@
-package ul.miage;
+package ul.miage.patron;
 
 public class Launcher {
     public static void main(String[] args) {

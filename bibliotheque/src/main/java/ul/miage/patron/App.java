@@ -1,4 +1,4 @@
-package ul.miage;
+package ul.miage.patron;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class App extends Application{
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		scene = new Scene(loadFXML("/Menu"));
+		scene = new Scene(loadFXML("/vue/Menu"));
 		stage.setScene(scene);
 		stage.show();
 		stage.setResizable(false);
