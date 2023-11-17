@@ -2,9 +2,6 @@ package ul.miage.patron.controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import ul.miage.patron.database.helpers.HelperUsager;
 import ul.miage.patron.model.Usager;
 
@@ -70,11 +66,6 @@ public class ControllerUsager {
     public void updateUsager(Usager usager){
         HelperUsager helperUsager = new HelperUsager();
         helperUsager.updateUsager(usager);
-    }
-
-    public void deleteUsager(Usager usager){
-        HelperUsager helperUsager = new HelperUsager();
-        helperUsager.deleteUsager(usager);
     }
 
     public void selectUsager(){

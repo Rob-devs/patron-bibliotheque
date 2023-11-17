@@ -6,15 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import ul.miage.patron.database.SQLiteConnection;
-import ul.miage.patron.model.Usager;
+import ul.miage.patron.model.Exemplaire;
 
-public class HelperUsager {
-
-    public ResultSet selectAllUsager(){
+public class HelperExemplaire {
+    public ResultSet selectAllExemplaire(){
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
-                String selectQuery = "SELECT * FROM Usager";
+                String selectQuery = "SELECT * FROM Exemplaire";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getResultSet();
@@ -26,12 +25,13 @@ public class HelperUsager {
         return null;
     }
 
-    public ResultSet selectUsager(){
+    public ResultSet selectExemplaire(Exemplaire exemplaire){
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
-                String selectQuery = "SELECT * FROM Usager WHERE id = ?";
+                String selectQuery = "SELECT * FROM Exemplaire WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+                preparedStatement.setInt(0, exemplaire.getId());
                 preparedStatement.executeQuery();
                 ResultSet resultSet = preparedStatement.getResultSet();
                 return resultSet;
@@ -42,16 +42,15 @@ public class HelperUsager {
         return null;
     }
 
-    public void insertUsager(Usager usager){
+    public void insertExemplaire(Exemplaire exemplaire){
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
-                String insertQuery = "INSERT INTO usager (email, nom, prenom, telephone) VALUES (?, ?, ?, ?)";
+                String insertQuery = "INSERT INTO exemplaire (etat, disponible, oeuvre) VALUES (?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-                preparedStatement.setString(0, usager.getEmail());
-                preparedStatement.setString(1, usager.getNom());
-                preparedStatement.setString(2, usager.getPrenom());
-                preparedStatement.setInt(3, usager.getTelephone());
+                preparedStatement.setString(0, exemplaire.getEtat().toString());
+                preparedStatement.setString(1, Boolean.toString(exemplaire.isDisponible()));
+                preparedStatement.setString(2, exemplaire.getEtat().toString());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -59,17 +58,16 @@ public class HelperUsager {
         }
     }
 
-    public void updateUsager(Usager usager){
+    public void updateExemplaire(Exemplaire exemplaire){
         Connection connection = SQLiteConnection.connect();
         if(connection != null){
             try {
-                String updateQuery = "UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ? WHERE id = ?";
+                String updateQuery = "UPDATE exemplaire SET etat = ?, disponible = ?, oeuvre = ? WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                preparedStatement.setString(0, usager.getEmail());
-                preparedStatement.setString(1, usager.getNom());
-                preparedStatement.setString(2, usager.getPrenom());
-                preparedStatement.setInt(3, usager.getTelephone());
-                preparedStatement.setInt(4, usager.getId());
+                preparedStatement.setString(0, exemplaire.getEtat().toString());
+                preparedStatement.setString(1, Boolean.toString(exemplaire.isDisponible()));
+                preparedStatement.setString(2, exemplaire.getEtat().toString());
+                preparedStatement.setInt(3, exemplaire.getId());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
