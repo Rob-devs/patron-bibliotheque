@@ -5,6 +5,7 @@ import ul.miage.patron.utilities.Date;
 import ul.miage.patron.model.enumerations.GenreOeuvre;
 
 public class Oeuvre {
+
     private int id;
     private String titre;
     private String auteur;
@@ -12,10 +13,10 @@ public class Oeuvre {
     private GenreOeuvre genre;
     private int nbReservations;
 
-    public Oeuvre(String titre, String auteur, int jour, int mois, int annee, GenreOeuvre genre) {
+    public Oeuvre(String titre, String auteur, Date date, GenreOeuvre genre) {
         this.titre = titre;
         this.auteur = auteur;
-        this.datePublication = new Date(jour, mois, annee);
+        this.datePublication = date;
         this.genre = genre;
         this.nbReservations = 0;
     }
@@ -74,5 +75,4 @@ public class Oeuvre {
 
     // A faire : fonction statique de recherche d'oeuvre par titre (et auteur?)
 
-    
 }

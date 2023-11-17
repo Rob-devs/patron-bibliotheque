@@ -3,10 +3,17 @@ package ul.miage.patron.model;
 import ul.miage.patron.model.enumerations.EtatExemplaire;
 
 public class Exemplaire {
+
     private int id;
     private EtatExemplaire etat;
     private boolean disponible;
     private Oeuvre oeuvre;
+
+    public Exemplaire(int id, EtatExemplaire etat) {
+        this.id = id;
+        this.etat = etat;
+        this.disponible = true;
+    }
 
     public Oeuvre getOeuvre() {
         return oeuvre;
@@ -39,12 +46,4 @@ public class Exemplaire {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-
-    public Exemplaire(int id, EtatExemplaire etat) {
-        this.id = id;
-        this.etat = etat;
-        this.disponible = true;
-    }
-
-    // A faire : méthode statique pour trouver un exemplaire à partir du titre de l'oeuvre
 }

@@ -1,8 +1,7 @@
 package ul.miage.patron.model.enumerations;
 
 public enum EtatExemplaire {
-    TRES_BON,
+    NEUF,
     BON,
-    MAUVAIS,
-    TRES_MAUVAIS
+    MAUVAIS
 }

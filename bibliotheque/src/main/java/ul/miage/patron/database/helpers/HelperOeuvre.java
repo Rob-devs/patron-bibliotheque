@@ -10,9 +10,12 @@ import ul.miage.patron.model.Oeuvre;
 
 public class HelperOeuvre {
 
-    public ResultSet selectAllOeuvre(){
+    // ***********************************************************
+    // Sélectionner toutes les oeuvres
+    // ***********************************************************
+    public ResultSet selectAllOeuvre() {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Oeuvre";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -26,9 +29,12 @@ public class HelperOeuvre {
         return null;
     }
 
-    public ResultSet selectOeuvre(){
+    // ***********************************************************
+    // Sélectionner une oeuvre
+    // ***********************************************************
+    public ResultSet selectOeuvre() {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Oeuvre WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -42,9 +48,12 @@ public class HelperOeuvre {
         return null;
     }
 
-    public void insertOeuvre(Oeuvre oeuvre){
+    // ***********************************************************
+    // Insérer une oeuvre
+    // ***********************************************************
+    public void insertOeuvre(Oeuvre oeuvre) {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String insertQuery = "INSERT INTO oeuvre (titre, auteur, datePublication, genre) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
@@ -52,24 +61,6 @@ public class HelperOeuvre {
                 preparedStatement.setString(1, oeuvre.getAuteur());
                 preparedStatement.setString(2, oeuvre.getDatePublication().toString());
                 preparedStatement.setString(3, oeuvre.getGenre().toString());
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }   
-    }
-
-    public void updateOeuvre(Oeuvre oeuvre){
-        Connection connection = SQLiteConnection.connect();
-        if(connection != null){
-            try {
-                String updateQuery = "UPDATE oeuvre SET titre = ?, auteur = ?, datePublication = ?, genre = ? WHERE id = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                preparedStatement.setString(0, oeuvre.getTitre());
-                preparedStatement.setString(1, oeuvre.getAuteur());
-                preparedStatement.setString(2, oeuvre.getDatePublication().toString());
-                preparedStatement.setString(3, oeuvre.getGenre().toString());
-                preparedStatement.setInt(4, oeuvre.getId());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
