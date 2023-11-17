@@ -9,9 +9,13 @@ import ul.miage.patron.database.SQLiteConnection;
 import ul.miage.patron.model.Exemplaire;
 
 public class HelperExemplaire {
-    public ResultSet selectAllExemplaire(){
+
+    // ***********************************************************
+    // Sélectionner tous les exemplaires
+    // ***********************************************************
+    public ResultSet selectAllExemplaire() {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Exemplaire";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -25,9 +29,12 @@ public class HelperExemplaire {
         return null;
     }
 
-    public ResultSet selectExemplaire(Exemplaire exemplaire){
+    // ***********************************************************
+    // Sélectionner un exemplaire
+    // ***********************************************************
+    public ResultSet selectExemplaire(Exemplaire exemplaire) {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Exemplaire WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -42,9 +49,12 @@ public class HelperExemplaire {
         return null;
     }
 
-    public void insertExemplaire(Exemplaire exemplaire){
+    // ***********************************************************
+    // Insérer un exemplaire
+    // ***********************************************************
+    public void insertExemplaire(Exemplaire exemplaire) {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String insertQuery = "INSERT INTO exemplaire (etat, disponible, oeuvre) VALUES (?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
@@ -58,9 +68,12 @@ public class HelperExemplaire {
         }
     }
 
-    public void updateExemplaire(Exemplaire exemplaire){
+    // ***********************************************************
+    // Modifier un exemplaire
+    // ***********************************************************
+    public void updateExemplaire(Exemplaire exemplaire) {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String updateQuery = "UPDATE exemplaire SET etat = ?, disponible = ?, oeuvre = ? WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);

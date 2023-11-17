@@ -11,16 +11,18 @@ import ul.miage.patron.database.SQLiteConnection;
 import ul.miage.patron.model.Emprunt;
 import ul.miage.patron.model.enumerations.EtatEmprunt;
 
-
 public class HelperEmprunt {
 
-    public void rendreExemplaire(Emprunt emprunt){
+    // ***********************************************************
+    // Rendre un exemplaire
+    // ***********************************************************
+    public void rendreExemplaire(Emprunt emprunt) {
         Connection connection = SQLiteConnection.connect();
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String dateRenduReelle = dateFormat.format(currentDate);
-        
-        if(connection != null){
+
+        if (connection != null) {
             try {
                 String updateQuery = "UPDATE emprunt SET dateRenduReelle = ?, etat = ? WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
@@ -33,10 +35,13 @@ public class HelperEmprunt {
             }
         }
     }
-    
-    public ResultSet selectAllEmprunt(){
+
+    // ***********************************************************
+    // Sélectionner tous les emprunts
+    // ***********************************************************
+    public ResultSet selectAllEmprunt() {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Emprunt";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -50,9 +55,12 @@ public class HelperEmprunt {
         return null;
     }
 
-    public ResultSet selectEmprunt(){
+    // ***********************************************************
+    // Sélectionner un emprunt
+    // ***********************************************************
+    public ResultSet selectEmprunt() {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Emprunt WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
@@ -66,9 +74,12 @@ public class HelperEmprunt {
         return null;
     }
 
-    public void insertEmprunt(Emprunt emprunt){
+    // ***********************************************************
+    // Insérer un emprunt
+    // ***********************************************************
+    public void insertEmprunt(Emprunt emprunt) {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String insertQuery = "INSERT INTO emprunt (dateDebut, dateRendu, exemplaire, usager) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
@@ -83,9 +94,12 @@ public class HelperEmprunt {
         }
     }
 
-    public void updateEmprunt(Emprunt emprunt){
+    // ***********************************************************
+    // Modifier un emprunt
+    // ***********************************************************
+    public void updateEmprunt(Emprunt emprunt) {
         Connection connection = SQLiteConnection.connect();
-        if(connection != null){
+        if (connection != null) {
             try {
                 String updateQuery = "UPDATE emprunt SET dateDebut = ?, dateRendu = ?, exemplaire = ?, usager = ? WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);

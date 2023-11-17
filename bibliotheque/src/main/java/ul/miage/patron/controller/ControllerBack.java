@@ -12,7 +12,7 @@ import javafx.scene.control.ListView;
 import ul.miage.patron.database.helpers.HelperUsager;
 import ul.miage.patron.model.Usager;
 
-public class ControllerUsager {
+public class ControllerBack {
     @FXML
     Button btnAdd;
 
@@ -23,26 +23,31 @@ public class ControllerUsager {
 
     public void initialize() {
         getAllUsager();
-		listViewUsager.setItems(usagers);
-		listViewUsager.setCellFactory(lv -> new ListCell<Usager>() {
-			@Override
-			public void updateItem(Usager item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty) {
-					setText(null);
-				} else {
-					String text = item.getNom() + " " + item.getPrenom();
-					setText(text);
-				}
-			}
-		});
-	}
+        listViewUsager.setItems(usagers);
+        listViewUsager.setCellFactory(lv -> new ListCell<Usager>() {
+            @Override
+            public void updateItem(Usager item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    String text = item.getNom() + " " + item.getPrenom();
+                    setText(text);
+                }
+            }
+        });
+    }
 
-    public void getAllUsager(){
+    // ***********************************************************
+    // Usagers
+    // ***********************************************************
+
+    // Sélectionner tous les usagers
+    public void getAllUsager() {
         HelperUsager helperUsager = new HelperUsager();
         ResultSet resultSet = helperUsager.selectAllUsager();
         try {
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String email = resultSet.getString("email");
                 String nom = resultSet.getString("nom");
@@ -57,24 +62,22 @@ public class ControllerUsager {
         }
     }
 
-    public void insertUsager(){
+    // Sélectionner un usager
+    public void selectUsager() {
+        HelperUsager helperUsager = new HelperUsager();
+        helperUsager.selectUsager();
+    }
+
+    // Insérer un usager
+    public void insertUsager() {
         Usager usager = new Usager(0, "email", "nom", "prenom", 0);
         HelperUsager helperUsager = new HelperUsager();
         helperUsager.insertUsager(usager);
     }
 
-    public void updateUsager(Usager usager){
+    // Modifier un usager
+    public void updateUsager(Usager usager) {
         HelperUsager helperUsager = new HelperUsager();
         helperUsager.updateUsager(usager);
-    }
-
-    public void selectUsager(){
-        HelperUsager helperUsager = new HelperUsager();
-        helperUsager.selectUsager();
-    }
-
-    public void selectAllUsager(){
-        HelperUsager helperUsager = new HelperUsager();
-        helperUsager.selectAllUsager();
     }
 }

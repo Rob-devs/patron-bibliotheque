@@ -8,12 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class App extends Application{
-    private static Scene scene;
+public class App extends Application {
+	private static Scene scene;
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		scene = new Scene(loadFXML("/vue/Menu"));
+		scene = new Scene(loadFXML("/vue/MenuBack"));
 		stage.setScene(scene);
 		stage.show();
 		stage.setResizable(false);
