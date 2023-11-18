@@ -52,7 +52,7 @@ public class HelperReservation {
                 preparedStatement.setString(1, reservation.getDateDebut().toString());
                 preparedStatement.setString(2, reservation.getDateFin().toString());
                 preparedStatement.setString(3, reservation.getEtat().toString());
-                preparedStatement.setInt(4, reservation.getOeuvre().getId());
+                preparedStatement.setString(4, reservation.getOeuvre().getTitre());
                 preparedStatement.setString(5, reservation.getUsager().getEmail());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class HelperReservation {
                 preparedStatement.setString(1, reservation.getDateDebut().toString());
                 preparedStatement.setString(2, reservation.getDateFin().toString());
                 preparedStatement.setString(3, reservation.getEtat().toString());
-                preparedStatement.setInt(4, reservation.getOeuvre().getId());
+                preparedStatement.setString(4, reservation.getOeuvre().getTitre());
                 preparedStatement.setString(5, reservation.getUsager().getEmail());
                 preparedStatement.setInt(6, reservation.getId());
                 preparedStatement.executeUpdate();

@@ -6,7 +6,6 @@ import ul.miage.patron.model.enumerations.GenreOeuvre;
 
 public class Oeuvre {
 
-    private int id;
     private String titre;
     private String auteur;
     private LocalDate datePublication;
@@ -59,14 +58,6 @@ public class Oeuvre {
 
     public void setNbReservations(int nbReservations) {
         this.nbReservations = nbReservations;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setDatePublication(LocalDate datePublication) {

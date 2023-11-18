@@ -39,7 +39,7 @@ public class HelperExemplaire {
                 String selectQuery = "SELECT * FROM Exemplaire WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
                 preparedStatement.setInt(1, id);
-                preparedStatement.executeQuery();
+                preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getResultSet();
                 return resultSet;
             } catch (SQLException e) {

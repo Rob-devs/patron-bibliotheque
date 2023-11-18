@@ -19,7 +19,7 @@ public class ControllerAddExemplaire {
     Button btnConfirm, btnCancel;
 
     @FXML
-    ChoiceBox<EtatExemplaire> cbEtatExemplaire;
+    ChoiceBox<EtatExemplaire> cbEtatExemplaire = new ChoiceBox<EtatExemplaire>();
 
     private Stage popupStage;
     private Stage parentStage;

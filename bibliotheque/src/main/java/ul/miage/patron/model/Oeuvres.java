@@ -9,7 +9,7 @@ public class Oeuvres {
         Oeuvres.oeuvres = oeuvres;
     }
 
-    public static Oeuvre identifier(int id) {
-        return oeuvres.stream().filter(oeuvre -> oeuvre.getId() == id).findFirst().orElse(null);
+    public static Oeuvre identifier(String titre) {
+        return oeuvres.stream().filter(oeuvre -> oeuvre.getTitre() == titre).findFirst().orElse(null);
     };
 }

@@ -16,7 +16,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnAdd" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" />
+            <Button fx:id="btnConfirm" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" />
             <Button fx:id="btnCancel" layoutX="141.0" layoutY="254.0" mnemonicParsing="false" text="Annuler" />
             <ChoiceBox fx:id="cbEtatExemplaire" layoutX="50.0" layoutY="137.0" prefHeight="25.0" prefWidth="149.0" />
             <Label fx:id="lblTitre" alignment="CENTER" contentDisplay="CENTER" layoutY="52.0" prefHeight="17.0" prefWidth="252.0" text="Label" textAlignment="CENTER" />
