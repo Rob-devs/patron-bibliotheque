@@ -1,7 +1,7 @@
 package ul.miage.patron.model;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import ul.miage.patron.model.enumerations.GenreOeuvre;
 
 public class Oeuvre {
@@ -9,11 +9,11 @@ public class Oeuvre {
     private int id;
     private String titre;
     private String auteur;
-    private Date datePublication;
+    private LocalDate datePublication;
     private GenreOeuvre genre;
     private int nbReservations;
 
-    public Oeuvre(String titre, String auteur, Date date, GenreOeuvre genre) {
+    public Oeuvre(String titre, String auteur, LocalDate date, GenreOeuvre genre) {
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = date;
@@ -37,12 +37,12 @@ public class Oeuvre {
         this.auteur = auteur;
     }
 
-    public Date getDatePublication() {
+    public LocalDate getDatePublication() {
         return datePublication;
     }
 
     public void setDatePublication(int jour, int mois, int annee) {
-        this.datePublication = new Date(jour, mois, annee);
+        this.datePublication = LocalDate.of(annee, mois, jour);
     }
 
     public GenreOeuvre getGenre() {
@@ -69,7 +69,7 @@ public class Oeuvre {
         this.id = id;
     }
 
-    public void setDatePublication(Date datePublication) {
+    public void setDatePublication(LocalDate datePublication) {
         this.datePublication = datePublication;
     }
 

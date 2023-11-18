@@ -1,4 +1,4 @@
-package ul.miage.patron.controller;
+package ul.miage.patron.controller.usagers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +18,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.database.helpers.HelperOeuvre;
@@ -31,7 +32,7 @@ import ul.miage.patron.model.enumerations.EtatEmprunt;
 import ul.miage.patron.model.enumerations.EtatExemplaire;
 import ul.miage.patron.model.enumerations.GenreOeuvre;
 
-public class ControllerBack {
+public class ControllerUsager {
     @FXML
     ListView<Usager> listViewUsager = new ListView<Usager>();
 
@@ -160,7 +161,7 @@ public class ControllerBack {
 
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
-
+            resetLabels();
             reloadListView();
         } catch (Exception e) {
             e.printStackTrace();
@@ -192,13 +193,17 @@ public class ControllerBack {
 
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
-            lblFullName.setText("");
-            lblEmail.setText("");
-            lblTelephone.setText("");
+            resetLabels();
             reloadListView();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void resetLabels() {
+        lblFullName.setText("");
+        lblEmail.setText("");
+        lblTelephone.setText("");
     }
 
     public void deleteUsager() {
@@ -210,47 +215,72 @@ public class ControllerBack {
             helperUsager.deleteUsager(selectedUsager);
             reloadListView();
         }
+        resetLabels();
     }
-
+    
     // ***********************************************************
-    // Emprunts
+    // Navigation
     // ***********************************************************
-    public void getAllEmprunts() {
-        HelperEmprunt helperEmprunt = new HelperEmprunt();
-        ResultSet resultSet = helperEmprunt.selectAllEmprunt();
-
+    public void openMenuOeuvre(){
         try {
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                Date dateDebut = resultSet.getDate("dateDebut");
-                Date dateRendu = resultSet.getDate("dateRendu");
-                Date dateRenduReelle = resultSet.getDate("dateRenduReelle");
-                EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
+            // Charger le fichier FXML de la fenêtre pop-up
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MenuOeuvre.fxml"));
+            Parent root = loader.load();
 
-                HelperExemplaire helperExemplaire = new HelperExemplaire();
-                ResultSet resultExemplaire = helperExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
-                HelperOeuvre helperOeuvre = new HelperOeuvre();
-                ResultSet resultOeuvre = helperOeuvre.selectOeuvre(resultExemplaire.getInt("oeuvre"));
-                Oeuvre oeuvre = new Oeuvre(resultOeuvre.getString("titre"), resultOeuvre.getString("auteur"),
-                        resultOeuvre.getDate("datePublication"), GenreOeuvre.valueOf(resultOeuvre.getString("genre")));
-                Exemplaire exemplaire = new Exemplaire(resultExemplaire.getInt("id"),
-                        EtatExemplaire.valueOf(resultExemplaire.getString("etat")),
-                        resultExemplaire.getBoolean("disponible"), oeuvre);
+            Scene scene = new Scene(root);
 
-                HelperUsager helperUsager = new HelperUsager();
-                ResultSet resultUsager = helperUsager.selectUsager(resultSet.getString("usager"));
-                Usager usager = new Usager(resultUsager.getString("email"), resultUsager.getString("nom"),
-                        resultUsager.getString("prenom"), resultUsager.getInt("telephone"));
+            Stage newStage = new Stage();
+            newStage.setTitle("Menu oeuvre");
+            newStage.setScene(scene);
+            newStage.show();
 
-                Emprunt emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
-                emprunts.add(emprunt);
-            }
-        } catch (SQLException e) {
+            Stage mainStage = (Stage) listViewUsager.getScene().getWindow();
+            mainStage.close();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // ***********************************************************
-    // Réservations
-    // ***********************************************************
+    // // ***********************************************************
+    // // Emprunts
+    // // ***********************************************************
+    // public void getAllEmprunts() {
+    //     HelperEmprunt helperEmprunt = new HelperEmprunt();
+    //     ResultSet resultSet = helperEmprunt.selectAllEmprunt();
+
+    //     try {
+    //         while (resultSet.next()) {
+    //             int id = resultSet.getInt("id");
+    //             Date dateDebut = resultSet.getDate("dateDebut");
+    //             Date dateRendu = resultSet.getDate("dateRendu");
+    //             Date dateRenduReelle = resultSet.getDate("dateRenduReelle");
+    //             EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
+
+    //             HelperExemplaire helperExemplaire = new HelperExemplaire();
+    //             ResultSet resultExemplaire = helperExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
+    //             HelperOeuvre helperOeuvre = new HelperOeuvre();
+    //             ResultSet resultOeuvre = helperOeuvre.selectOeuvre(resultExemplaire.getInt("oeuvre"));
+    //             Oeuvre oeuvre = new Oeuvre(resultOeuvre.getString("titre"), resultOeuvre.getString("auteur"),
+    //                     resultOeuvre.getDate("datePublication"), GenreOeuvre.valueOf(resultOeuvre.getString("genre")));
+    //             Exemplaire exemplaire = new Exemplaire(resultExemplaire.getInt("id"),
+    //                     EtatExemplaire.valueOf(resultExemplaire.getString("etat")),
+    //                     resultExemplaire.getBoolean("disponible"), oeuvre);
+
+    //             HelperUsager helperUsager = new HelperUsager();
+    //             ResultSet resultUsager = helperUsager.selectUsager(resultSet.getString("usager"));
+    //             Usager usager = new Usager(resultUsager.getString("email"), resultUsager.getString("nom"),
+    //                     resultUsager.getString("prenom"), resultUsager.getInt("telephone"));
+
+    //             Emprunt emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
+    //             emprunts.add(emprunt);
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
+    // // ***********************************************************
+    // // Réservations
+    // // ***********************************************************
 }

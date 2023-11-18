@@ -1,4 +1,4 @@
-package ul.miage.patron.controller;
+package ul.miage.patron.controller.usagers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,7 +40,7 @@ public class ControllerUpdateUsager {
     public void confirmUpdate(){
         updateUsager(currentUsager);
 
-        ControllerBack controllerBack = new ControllerBack();
+        ControllerUsager controllerBack = new ControllerUsager();
         controllerBack.reloadListView();
 
         popupStage.close();

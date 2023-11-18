@@ -60,7 +60,7 @@ public class HelperExemplaire {
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
                 preparedStatement.setString(1, exemplaire.getEtat().toString());
                 preparedStatement.setString(2, Boolean.toString(exemplaire.isDisponible()));
-                preparedStatement.setString(3, exemplaire.getEtat().toString());
+                preparedStatement.setString(3, exemplaire.getOeuvre().getTitre());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
