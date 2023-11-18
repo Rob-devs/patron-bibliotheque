@@ -33,23 +33,15 @@ import ul.miage.patron.model.enumerations.GenreOeuvre;
 
 public class ControllerBack {
     @FXML
-    Button btnAdd, btnConfirm, btnDelete, btnUpdate;
+    Button btnAdd;
 
     @FXML
     ListView<Usager> listViewUsager = new ListView<Usager>();
     
-    @FXML
-    TextField tfNom, tfPrenom, tfMail, tfTelephone;
-
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
     ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
 
-
-    Stage mainStage = new Stage();
-    Stage popupStage = new Stage();
-
     public void initialize() {
-        mainStage.setScene(listViewUsager.getScene());
         getAllUsager();
         listViewUsager.setItems(usagers);
         listViewUsager.setCellFactory(lv -> new ListCell<Usager>() {
@@ -116,18 +108,6 @@ public class ControllerBack {
         return usager;
     }
 
-    // Insérer un usager
-    public void insertUsager() {
-        Usager usager = new Usager(
-            tfMail.getText(),
-            tfNom.getText(),
-            tfPrenom.getText(),
-            Integer.parseInt(tfTelephone.getText())
-        );
-        HelperUsager helperUsager = new HelperUsager();
-        helperUsager.insertUsager(usager);
-    }
-
     // Modifier un usager
     public void updateUsager(Usager usager) {
         HelperUsager helperUsager = new HelperUsager();
@@ -144,16 +124,18 @@ public class ControllerBack {
             // Créer une nouvelle scène
             Scene scene = new Scene(root);
             
-
             // Créer la fenêtre pop-up
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.initStyle(StageStyle.UTILITY);
-            popupStage.initOwner(((Stage) scene.getWindow())); // Propriétaire de la boîte de dialogue modale
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);// Propriétaire de la boîte de dialogue modale
             popupStage.setTitle("Ajouter usager");
             popupStage.setScene(scene);
 
-            ControllerBack controllerBack = loader.getController();
-            controllerBack.popupStage = popupStage;
+            // Récupérer le contrôleur de la fenêtre pop-up
+            Stage mainStage = (Stage) btnAdd.getScene().getWindow();
+            ControllerAddUsager controllerAddUsager = loader.getController();
+            controllerAddUsager.setPopupStage(popupStage);
+            controllerAddUsager.setParentStage(mainStage);
+            controllerAddUsager.setControllerBack(this);
 
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
@@ -162,11 +144,6 @@ public class ControllerBack {
         }
     }
 
-    public void confirmAdd(){
-        insertUsager();
-        popupStage.close();
-        reloadListView();
-    }
 
     // ***********************************************************
     // Emprunts
