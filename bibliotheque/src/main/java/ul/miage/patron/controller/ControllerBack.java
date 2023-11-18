@@ -37,7 +37,7 @@ public class ControllerBack {
 
     @FXML
     ListView<Usager> listViewUsager = new ListView<Usager>();
-    
+
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
     ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
 
@@ -70,6 +70,10 @@ public class ControllerBack {
     // Sélectionner tous les usagers
     public void getAllUsager() {
         HelperUsager helperUsager = new HelperUsager();
+
+        // Vider la liste avant de la remplir
+        usagers.clear();
+
         ResultSet resultSet = helperUsager.selectAllUsager();
         try {
             while (resultSet.next()) {
@@ -104,7 +108,7 @@ public class ControllerBack {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         return usager;
     }
 
@@ -123,7 +127,7 @@ public class ControllerBack {
 
             // Créer une nouvelle scène
             Scene scene = new Scene(root);
-            
+
             // Créer la fenêtre pop-up
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);// Propriétaire de la boîte de dialogue modale
@@ -139,11 +143,12 @@ public class ControllerBack {
 
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
+
+            reloadListView();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     // ***********************************************************
     // Emprunts
@@ -159,17 +164,21 @@ public class ControllerBack {
                 Date dateRendu = resultSet.getDate("dateRendu");
                 Date dateRenduReelle = resultSet.getDate("dateRenduReelle");
                 EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
-                
+
                 HelperExemplaire helperExemplaire = new HelperExemplaire();
                 ResultSet resultExemplaire = helperExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
                 HelperOeuvre helperOeuvre = new HelperOeuvre();
                 ResultSet resultOeuvre = helperOeuvre.selectOeuvre(resultExemplaire.getInt("oeuvre"));
-                Oeuvre oeuvre = new Oeuvre(resultOeuvre.getString("titre"), resultOeuvre.getString("auteur"), resultOeuvre.getDate("datePublication"), GenreOeuvre.valueOf(resultOeuvre.getString("genre")));
-                Exemplaire exemplaire = new Exemplaire(resultExemplaire.getInt("id"), EtatExemplaire.valueOf(resultExemplaire.getString("etat")), resultExemplaire.getBoolean("disponible"), oeuvre);
+                Oeuvre oeuvre = new Oeuvre(resultOeuvre.getString("titre"), resultOeuvre.getString("auteur"),
+                        resultOeuvre.getDate("datePublication"), GenreOeuvre.valueOf(resultOeuvre.getString("genre")));
+                Exemplaire exemplaire = new Exemplaire(resultExemplaire.getInt("id"),
+                        EtatExemplaire.valueOf(resultExemplaire.getString("etat")),
+                        resultExemplaire.getBoolean("disponible"), oeuvre);
 
                 HelperUsager helperUsager = new HelperUsager();
                 ResultSet resultUsager = helperUsager.selectUsager(resultSet.getString("usager"));
-                Usager usager = new Usager(resultUsager.getString("email"), resultUsager.getString("nom"), resultUsager.getString("prenom"), resultUsager.getInt("telephone"));
+                Usager usager = new Usager(resultUsager.getString("email"), resultUsager.getString("nom"),
+                        resultUsager.getString("prenom"), resultUsager.getInt("telephone"));
 
                 Emprunt emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
                 emprunts.add(emprunt);
