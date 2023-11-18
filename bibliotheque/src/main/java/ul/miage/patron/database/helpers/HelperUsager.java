@@ -72,7 +72,7 @@ public class HelperUsager {
     // ***********************************************************
     // Modifier un usager
     // ***********************************************************
-    public void updateUsager(Usager usager) {
+    public void updateUsager(Usager usager, String oldMail) {
         Connection connection = SQLiteConnection.connect();
         if (connection != null) {
             try {
@@ -82,7 +82,21 @@ public class HelperUsager {
                 preparedStatement.setString(2, usager.getNom());
                 preparedStatement.setString(3, usager.getPrenom());
                 preparedStatement.setInt(4, usager.getTelephone());
-                preparedStatement.setString(5, usager.getEmail());
+                preparedStatement.setString(5, oldMail);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void deleteUsager(Usager usager) {
+        Connection connection = SQLiteConnection.connect();
+        if (connection != null) {
+            try {
+                String deleteQuery = "DELETE FROM usager WHERE email = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+                preparedStatement.setString(1, usager.getEmail());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

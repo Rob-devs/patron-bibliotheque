@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import ul.miage.patron.database.helpers.HelperUsager;
 import ul.miage.patron.model.Usager;
 
-public class ControllerAddUsager {
+public class ControllerUpdateUsager {
     @FXML
     TextField tfNom, tfPrenom, tfMail, tfTelephone;
     
@@ -16,21 +16,29 @@ public class ControllerAddUsager {
 
     private Stage popupStage;
     private Stage parentStage;
+    
+    Usager currentUsager = null;
 
-    // Insérer un usager
-    public void insertUsager() {
-        Usager usager = new Usager(
-            tfMail.getText(),
-            tfNom.getText(),
-            tfPrenom.getText(),
-            Integer.parseInt(tfTelephone.getText())
-        );
-        HelperUsager helperUsager = new HelperUsager();
-        helperUsager.insertUsager(usager);
+    public void fillInfos(){
+        tfNom.setText(currentUsager.getNom());
+        tfPrenom.setText(currentUsager.getPrenom());
+        tfMail.setText(currentUsager.getEmail());
+        tfTelephone.setText(String.valueOf(currentUsager.getTelephone()));
     }
 
-    public void confirmAdd(){
-        insertUsager();
+    // Modifier un usager
+    public void updateUsager(Usager usager) {
+        String oldMail = usager.getEmail();
+        usager.setNom(tfNom.getText());
+        usager.setPrenom(tfPrenom.getText());
+        usager.setEmail(tfMail.getText());
+        usager.setTelephone(Integer.parseInt(tfTelephone.getText()));
+        HelperUsager helperUsager = new HelperUsager();
+        helperUsager.updateUsager(usager, oldMail);
+    }
+
+    public void confirmUpdate(){
+        updateUsager(currentUsager);
 
         ControllerBack controllerBack = new ControllerBack();
         controllerBack.reloadListView();
@@ -48,5 +56,9 @@ public class ControllerAddUsager {
 
     public void setParentStage(Stage parentStage) {
         this.parentStage = parentStage;
+    }
+
+    public void setCurrentUsager(Usager selectedUsager) {
+        this.currentUsager = selectedUsager;
     }
 }

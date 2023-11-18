@@ -10,14 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import ul.miage.patron.App;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.database.helpers.HelperOeuvre;
@@ -33,13 +33,15 @@ import ul.miage.patron.model.enumerations.GenreOeuvre;
 
 public class ControllerBack {
     @FXML
-    Button btnAdd;
+    ListView<Usager> listViewUsager = new ListView<Usager>();
 
     @FXML
-    ListView<Usager> listViewUsager = new ListView<Usager>();
+    Label lblFullName, lblEmail, lblTelephone;
 
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
     ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
+
+    Usager selectedUsager = null;
 
     public void initialize() {
         getAllUsager();
@@ -56,6 +58,26 @@ public class ControllerBack {
                 }
             }
         });
+
+        // Ajouter un écouteur d'événements à la ListView
+        listViewUsager.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedUsager = newValue;
+            displayDetails(); // Appeler la méthode displayDetails lorsque la sélection change
+        });
+    }
+
+    public void displayDetails() {
+        Usager usager = listViewUsager.getSelectionModel().getSelectedItem();
+        if (usager != null) {
+            lblFullName.setVisible(true);
+            lblFullName.setText(usager.getNom() + " " + usager.getPrenom());
+
+            lblEmail.setVisible(true);
+            lblEmail.setText("Adresse mail: " + usager.getEmail());
+
+            lblTelephone.setVisible(true);
+            lblTelephone.setText("Téléphone: " + usager.getTelephone());
+        }
     }
 
     public void reloadListView() {
@@ -112,11 +134,7 @@ public class ControllerBack {
         return usager;
     }
 
-    // Modifier un usager
-    public void updateUsager(Usager usager) {
-        HelperUsager helperUsager = new HelperUsager();
-        helperUsager.updateUsager(usager);
-    }
+    
 
     // Ouvrir popup pour ajouter un usager
     public void openPopupAddUsager() {
@@ -135,11 +153,10 @@ public class ControllerBack {
             popupStage.setScene(scene);
 
             // Récupérer le contrôleur de la fenêtre pop-up
-            Stage mainStage = (Stage) btnAdd.getScene().getWindow();
+            Stage mainStage = (Stage) listViewUsager.getScene().getWindow();
             ControllerAddUsager controllerAddUsager = loader.getController();
             controllerAddUsager.setPopupStage(popupStage);
             controllerAddUsager.setParentStage(mainStage);
-            controllerAddUsager.setControllerBack(this);
 
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
@@ -147,6 +164,51 @@ public class ControllerBack {
             reloadListView();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void openPopupUpdateUsager() {
+        try {
+            // Charger le fichier FXML de la fenêtre pop-up
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/UpdateUsager.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène
+            Scene scene = new Scene(root);
+
+            // Créer la fenêtre pop-up
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);// Propriétaire de la boîte de dialogue modale
+            popupStage.setTitle("Modifier usager");
+            popupStage.setScene(scene);
+
+            // Récupérer le contrôleur de la fenêtre pop-up
+            Stage mainStage = (Stage) listViewUsager.getScene().getWindow();
+            ControllerUpdateUsager controllerUpdateUsager = loader.getController();
+            controllerUpdateUsager.setPopupStage(popupStage);
+            controllerUpdateUsager.setParentStage(mainStage);
+            controllerUpdateUsager.setCurrentUsager(selectedUsager);
+            controllerUpdateUsager.fillInfos();
+
+            // Afficher la fenêtre pop-up
+            popupStage.showAndWait();
+            lblFullName.setText("");
+            lblEmail.setText("");
+            lblTelephone.setText("");
+            reloadListView();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUsager() {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Supprimer  " + selectedUsager.getNom() + " " + selectedUsager.getPrenom() + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            HelperUsager helperUsager = new HelperUsager();
+            helperUsager.deleteUsager(selectedUsager);
+            reloadListView();
         }
     }
 

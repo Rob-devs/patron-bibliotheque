@@ -75,8 +75,8 @@
                            </children>
                         </Pane>
                         <Button fx:id="btnAdd" layoutX="99.0" layoutY="423.0" mnemonicParsing="false" onAction="#openPopupAddUsager" text="Ajouter" />
-                        <Button layoutX="193.0" layoutY="423.0" mnemonicParsing="false" text="Modifier" />
-                        <Button layoutX="294.0" layoutY="423.0" mnemonicParsing="false" text="Supprimer" />
+                        <Button fx:id="btnUpdate" layoutX="193.0" layoutY="423.0" mnemonicParsing="false" onAction="#openPopupUpdateUsager" text="Modifier" />
+                        <Button fx:id="BtnDelete" layoutX="294.0" layoutY="423.0" mnemonicParsing="false" onAction="#deleteUsager" text="Supprimer" />
               </children>
             </AnchorPane>
           </content>
@@ -84,6 +84,13 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Détails" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                  <Label fx:id="lblFullName" layoutX="20.0" layoutY="80.0" text="Label" visible="false">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblEmail" layoutX="20.0" layoutY="150.0" text="Label" visible="false" />
+                  <Label fx:id="lblTelephone" layoutX="20.0" layoutY="220.0" text="Label" visible="false" />
           </children>
         </AnchorPane>
       </items>
