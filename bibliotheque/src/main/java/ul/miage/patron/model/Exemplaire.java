@@ -9,10 +9,18 @@ public class Exemplaire {
     private boolean disponible;
     private Oeuvre oeuvre;
 
-    public Exemplaire(int id, EtatExemplaire etat) {
+    public Exemplaire(int id, EtatExemplaire etat, Oeuvre oeuvre) {
         this.id = id;
         this.etat = etat;
         this.disponible = true;
+        this.oeuvre = oeuvre;
+    }
+
+    public Exemplaire(int id, EtatExemplaire etat, boolean disponible, Oeuvre oeuvre) {
+        this.id = id;
+        this.etat = etat;
+        this.disponible = disponible;
+        this.oeuvre = oeuvre;
     }
 
     public Oeuvre getOeuvre() {

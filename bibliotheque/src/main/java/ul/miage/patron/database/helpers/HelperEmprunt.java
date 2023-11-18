@@ -26,9 +26,9 @@ public class HelperEmprunt {
             try {
                 String updateQuery = "UPDATE emprunt SET dateRenduReelle = ?, etat = ? WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                preparedStatement.setString(0, dateRenduReelle);
-                preparedStatement.setString(1, EtatEmprunt.TERMINE.toString());
-                preparedStatement.setInt(2, emprunt.getId());
+                preparedStatement.setString(1, dateRenduReelle);
+                preparedStatement.setString(2, EtatEmprunt.TERMINE.toString());
+                preparedStatement.setInt(3, emprunt.getId());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -58,12 +58,13 @@ public class HelperEmprunt {
     // ***********************************************************
     // Sélectionner un emprunt
     // ***********************************************************
-    public ResultSet selectEmprunt() {
+    public ResultSet selectEmprunt(int id) {
         Connection connection = SQLiteConnection.connect();
         if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Emprunt WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+                preparedStatement.setInt(1, id);
                 preparedStatement.executeQuery();
                 ResultSet resultSet = preparedStatement.getResultSet();
                 return resultSet;
@@ -83,10 +84,10 @@ public class HelperEmprunt {
             try {
                 String insertQuery = "INSERT INTO emprunt (dateDebut, dateRendu, exemplaire, usager) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-                preparedStatement.setString(0, emprunt.getDateDebut().toString());
-                preparedStatement.setString(1, emprunt.getDateRendu().toString());
-                preparedStatement.setInt(2, emprunt.getExemplaire().getId());
-                preparedStatement.setInt(3, emprunt.getUsager().getId());
+                preparedStatement.setString(1, emprunt.getDateDebut().toString());
+                preparedStatement.setString(2, emprunt.getDateRendu().toString());
+                preparedStatement.setInt(3, emprunt.getExemplaire().getId());
+                preparedStatement.setString(4, emprunt.getUsager().getEmail());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -103,11 +104,11 @@ public class HelperEmprunt {
             try {
                 String updateQuery = "UPDATE emprunt SET dateDebut = ?, dateRendu = ?, exemplaire = ?, usager = ? WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                preparedStatement.setString(0, emprunt.getDateDebut().toString());
-                preparedStatement.setString(1, emprunt.getDateRendu().toString());
-                preparedStatement.setInt(2, emprunt.getExemplaire().getId());
-                preparedStatement.setInt(3, emprunt.getUsager().getId());
-                preparedStatement.setInt(4, emprunt.getId());
+                preparedStatement.setString(1, emprunt.getDateDebut().toString());
+                preparedStatement.setString(2, emprunt.getDateRendu().toString());
+                preparedStatement.setInt(3, emprunt.getExemplaire().getId());
+                preparedStatement.setString(4, emprunt.getUsager().getEmail());
+                preparedStatement.setInt(5, emprunt.getId());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

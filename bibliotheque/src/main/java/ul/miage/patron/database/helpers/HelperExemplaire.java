@@ -32,13 +32,13 @@ public class HelperExemplaire {
     // ***********************************************************
     // Sélectionner un exemplaire
     // ***********************************************************
-    public ResultSet selectExemplaire(Exemplaire exemplaire) {
+    public ResultSet selectExemplaire(int id) {
         Connection connection = SQLiteConnection.connect();
         if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Exemplaire WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-                preparedStatement.setInt(0, exemplaire.getId());
+                preparedStatement.setInt(1, id);
                 preparedStatement.executeQuery();
                 ResultSet resultSet = preparedStatement.getResultSet();
                 return resultSet;
@@ -58,9 +58,9 @@ public class HelperExemplaire {
             try {
                 String insertQuery = "INSERT INTO exemplaire (etat, disponible, oeuvre) VALUES (?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-                preparedStatement.setString(0, exemplaire.getEtat().toString());
-                preparedStatement.setString(1, Boolean.toString(exemplaire.isDisponible()));
-                preparedStatement.setString(2, exemplaire.getEtat().toString());
+                preparedStatement.setString(1, exemplaire.getEtat().toString());
+                preparedStatement.setString(2, Boolean.toString(exemplaire.isDisponible()));
+                preparedStatement.setString(3, exemplaire.getEtat().toString());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -77,10 +77,10 @@ public class HelperExemplaire {
             try {
                 String updateQuery = "UPDATE exemplaire SET etat = ?, disponible = ?, oeuvre = ? WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                preparedStatement.setString(0, exemplaire.getEtat().toString());
-                preparedStatement.setString(1, Boolean.toString(exemplaire.isDisponible()));
-                preparedStatement.setString(2, exemplaire.getEtat().toString());
-                preparedStatement.setInt(3, exemplaire.getId());
+                preparedStatement.setString(1, exemplaire.getEtat().toString());
+                preparedStatement.setString(2, Boolean.toString(exemplaire.isDisponible()));
+                preparedStatement.setString(3, exemplaire.getEtat().toString());
+                preparedStatement.setInt(4, exemplaire.getId());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

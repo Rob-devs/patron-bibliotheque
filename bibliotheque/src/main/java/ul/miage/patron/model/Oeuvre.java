@@ -1,7 +1,7 @@
 package ul.miage.patron.model;
 
-import ul.miage.patron.utilities.Date;
 
+import java.util.Date;
 import ul.miage.patron.model.enumerations.GenreOeuvre;
 
 public class Oeuvre {

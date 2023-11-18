@@ -32,13 +32,14 @@ public class HelperOeuvre {
     // ***********************************************************
     // Sélectionner une oeuvre
     // ***********************************************************
-    public ResultSet selectOeuvre() {
+    public ResultSet selectOeuvre(int id) {
         Connection connection = SQLiteConnection.connect();
         if (connection != null) {
             try {
                 String selectQuery = "SELECT * FROM Oeuvre WHERE id = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-                preparedStatement.executeQuery();
+                preparedStatement.setInt(1, id);;
+                preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getResultSet();
                 return resultSet;
             } catch (SQLException e) {
@@ -57,10 +58,10 @@ public class HelperOeuvre {
             try {
                 String insertQuery = "INSERT INTO oeuvre (titre, auteur, datePublication, genre) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-                preparedStatement.setString(0, oeuvre.getTitre());
-                preparedStatement.setString(1, oeuvre.getAuteur());
-                preparedStatement.setString(2, oeuvre.getDatePublication().toString());
-                preparedStatement.setString(3, oeuvre.getGenre().toString());
+                preparedStatement.setString(1, oeuvre.getTitre());
+                preparedStatement.setString(2, oeuvre.getAuteur());
+                preparedStatement.setString(3, oeuvre.getDatePublication().toString());
+                preparedStatement.setString(4, oeuvre.getGenre().toString());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

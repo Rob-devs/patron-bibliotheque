@@ -32,13 +32,14 @@ public class HelperUsager {
     // ***********************************************************
     // Sélectionner un usager
     // ***********************************************************
-    public ResultSet selectUsager() {
+    public ResultSet selectUsager(String email) {
         Connection connection = SQLiteConnection.connect();
         if (connection != null) {
             try {
-                String selectQuery = "SELECT * FROM Usager WHERE id = ?";
+                String selectQuery = "SELECT * FROM Usager WHERE email = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-                preparedStatement.executeQuery();
+                preparedStatement.setString(1, email);
+                preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getResultSet();
                 return resultSet;
             } catch (SQLException e) {
@@ -57,10 +58,10 @@ public class HelperUsager {
             try {
                 String insertQuery = "INSERT INTO usager (email, nom, prenom, telephone) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-                preparedStatement.setString(0, usager.getEmail());
-                preparedStatement.setString(1, usager.getNom());
-                preparedStatement.setString(2, usager.getPrenom());
-                preparedStatement.setInt(3, usager.getTelephone());
+                preparedStatement.setString(1, usager.getEmail());
+                preparedStatement.setString(2, usager.getNom());
+                preparedStatement.setString(3, usager.getPrenom());
+                preparedStatement.setInt(4, usager.getTelephone());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -75,13 +76,13 @@ public class HelperUsager {
         Connection connection = SQLiteConnection.connect();
         if (connection != null) {
             try {
-                String updateQuery = "UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ? WHERE id = ?";
+                String updateQuery = "UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ? WHERE email = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                preparedStatement.setString(0, usager.getEmail());
-                preparedStatement.setString(1, usager.getNom());
-                preparedStatement.setString(2, usager.getPrenom());
-                preparedStatement.setInt(3, usager.getTelephone());
-                preparedStatement.setInt(4, usager.getId());
+                preparedStatement.setString(1, usager.getEmail());
+                preparedStatement.setString(2, usager.getNom());
+                preparedStatement.setString(3, usager.getPrenom());
+                preparedStatement.setInt(4, usager.getTelephone());
+                preparedStatement.setString(5, usager.getEmail());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
