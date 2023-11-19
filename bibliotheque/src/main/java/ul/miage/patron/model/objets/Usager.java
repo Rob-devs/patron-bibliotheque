@@ -5,10 +5,10 @@ public class Usager {
     private String email;
     private String nom;
     private String prenom;
-    private int telephone;
+    private String telephone;
     private int penalites;
 
-    public Usager(String email, String nom, String prenom, int telephone) {
+    public Usager(String email, String nom, String prenom, String telephone) {
         this.email = email;
         this.prenom = nom;
         this.nom = prenom;
@@ -40,11 +40,11 @@ public class Usager {
         this.email = email;
     }
 
-    public int getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

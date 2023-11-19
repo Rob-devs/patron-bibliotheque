@@ -19,6 +19,28 @@ public class ControllerUpdateUsager {
 
     Usager currentUsager = null;
 
+    @FXML
+    public void initialize() {
+
+        tfNom.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+        tfPrenom.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+        tfMail.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+    }
+
+    private void checkValues() {
+        if (tfNom.getText().isEmpty() || tfPrenom.getText().isEmpty() || tfMail.getText().isEmpty()) {
+            btnConfirm.setDisable(true);
+        } else {
+            btnConfirm.setDisable(false);
+        }
+    }
+
     public void fillInfos() {
         tfNom.setText(currentUsager.getNom());
         tfPrenom.setText(currentUsager.getPrenom());
@@ -32,7 +54,7 @@ public class ControllerUpdateUsager {
         usager.setNom(tfNom.getText());
         usager.setPrenom(tfPrenom.getText());
         usager.setEmail(tfMail.getText());
-        usager.setTelephone(Integer.parseInt(tfTelephone.getText()));
+        usager.setTelephone(tfTelephone.getText());
         HelperUsager helperUsager = new HelperUsager();
         helperUsager.updateUsager(usager, oldMail);
     }
@@ -40,14 +62,7 @@ public class ControllerUpdateUsager {
     public void confirmUpdate() {
         updateUsager(currentUsager);
 
-        ControllerUsager controllerBack = new ControllerUsager();
-        controllerBack.reloadListView();
-
         popupStage.close();
-
-        if (parentStage != null) {
-            parentStage.show();
-        }
     }
 
     public void setPopupStage(Stage popupStage) {
@@ -60,5 +75,12 @@ public class ControllerUpdateUsager {
 
     public void setCurrentUsager(Usager selectedUsager) {
         this.currentUsager = selectedUsager;
+    }
+
+    public void close() {
+        // Close the stage (pop-up window)
+        if (popupStage != null) {
+            popupStage.close();
+        }
     }
 }

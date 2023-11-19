@@ -45,7 +45,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.usagers.ControllerUsager">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.usagers.ControllerUsager">
   <children>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
@@ -108,8 +108,8 @@
                            </children>
                         </Pane>
                         <Button fx:id="btnAdd" layoutX="99.0" layoutY="423.0" mnemonicParsing="false" onAction="#openPopupAddUsager" text="Ajouter" />
-                        <Button fx:id="btnUpdate" layoutX="193.0" layoutY="423.0" mnemonicParsing="false" onAction="#openPopupUpdateUsager" text="Modifier" />
-                        <Button fx:id="BtnDelete" layoutX="294.0" layoutY="423.0" mnemonicParsing="false" onAction="#deleteUsager" text="Supprimer" />
+                        <Button fx:id="btnUpdate" disable="true" layoutX="193.0" layoutY="423.0" mnemonicParsing="false" onAction="#openPopupUpdateUsager" text="Modifier" />
+                        <Button fx:id="btnDelete" disable="true" layoutX="294.0" layoutY="423.0" mnemonicParsing="false" onAction="#deleteUsager" text="Supprimer" />
               </children>
             </AnchorPane>
           </content>

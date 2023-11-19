@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.oeuvres.ControllerAddOeuvre">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.oeuvres.ControllerAddOeuvre">
    <children>
       <AnchorPane prefHeight="300.0" prefWidth="250.0">
          <children>
@@ -18,8 +18,8 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnAdd" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" />
-            <Button fx:id="btnCancel" layoutX="141.0" layoutY="254.0" mnemonicParsing="false" text="Annuler" />
+            <Button fx:id="btnConfirm" disable="true" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" />
+            <Button fx:id="btnCancel" layoutX="141.0" layoutY="254.0" mnemonicParsing="false" onAction="#close" text="Annuler" />
             <TextField fx:id="tfTitre" layoutX="50.0" layoutY="80.0" promptText="Titre" />
             <TextField fx:id="tfAuteur" layoutX="50.0" layoutY="120.0" promptText="Auteur" />
             <DatePicker fx:id="dpDate" layoutX="50.0" layoutY="160.0" prefHeight="25.0" prefWidth="149.0" promptText="Date de publication" />

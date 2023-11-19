@@ -17,13 +17,35 @@ public class ControllerAddUsager {
     private Stage popupStage;
     private Stage parentStage;
 
+    @FXML
+    public void initialize() {
+
+        tfNom.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+        tfPrenom.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+        tfMail.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+    }
+
+    private void checkValues() {
+        if (tfNom.getText().isEmpty() || tfPrenom.getText().isEmpty() || tfMail.getText().isEmpty()) {
+            btnConfirm.setDisable(true);
+        } else {
+            btnConfirm.setDisable(false);
+        }
+    }
+
     // Insérer un usager
     public void insertUsager() {
         Usager usager = new Usager(
                 tfMail.getText(),
                 tfNom.getText(),
                 tfPrenom.getText(),
-                Integer.parseInt(tfTelephone.getText()));
+                tfTelephone.getText());
         HelperUsager helperUsager = new HelperUsager();
         helperUsager.insertUsager(usager);
     }
@@ -31,14 +53,7 @@ public class ControllerAddUsager {
     public void confirmAdd() {
         insertUsager();
 
-        ControllerUsager controllerBack = new ControllerUsager();
-        controllerBack.reloadListView();
-
         popupStage.close();
-
-        if (parentStage != null) {
-            parentStage.show();
-        }
     }
 
     public void setPopupStage(Stage popupStage) {
@@ -47,5 +62,12 @@ public class ControllerAddUsager {
 
     public void setParentStage(Stage parentStage) {
         this.parentStage = parentStage;
+    }
+
+    public void close() {
+        // Close the stage (pop-up window)
+        if (popupStage != null) {
+            popupStage.close();
+        }
     }
 }
