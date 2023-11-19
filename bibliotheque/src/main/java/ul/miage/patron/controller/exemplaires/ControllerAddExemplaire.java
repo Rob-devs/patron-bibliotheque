@@ -50,9 +50,6 @@ public class ControllerAddExemplaire {
     public void confirmAdd() {
         insertExemplaire();
 
-        ControllerOeuvre controllerOeuvre = new ControllerOeuvre();
-        controllerOeuvre.reloadListView();
-
         popupStage.close();
     }
 
