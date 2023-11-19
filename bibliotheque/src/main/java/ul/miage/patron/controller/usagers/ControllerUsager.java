@@ -2,7 +2,6 @@ package ul.miage.patron.controller.usagers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,19 +17,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
-import ul.miage.patron.database.helpers.HelperEmprunt;
-import ul.miage.patron.database.helpers.HelperExemplaire;
-import ul.miage.patron.database.helpers.HelperOeuvre;
 import ul.miage.patron.database.helpers.HelperUsager;
-import ul.miage.patron.model.Emprunt;
-import ul.miage.patron.model.Exemplaire;
-import ul.miage.patron.model.Oeuvre;
-import ul.miage.patron.model.Usager;
-import ul.miage.patron.model.Usagers;
-import ul.miage.patron.model.enumerations.EtatEmprunt;
-import ul.miage.patron.model.enumerations.EtatExemplaire;
-import ul.miage.patron.model.enumerations.GenreOeuvre;
+import ul.miage.patron.model.actions.Emprunt;
+import ul.miage.patron.model.objets.Usager;
+import ul.miage.patron.model.objets.Usagers;
 
 public class ControllerUsager {
     @FXML
@@ -109,7 +99,6 @@ public class ControllerUsager {
                 Usagers.setUsagers(usagers);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -128,14 +117,11 @@ public class ControllerUsager {
                 usagers.add(usager);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         return usager;
     }
-
-    
 
     // Ouvrir popup pour ajouter un usager
     public void openPopupAddUsager() {
@@ -207,7 +193,9 @@ public class ControllerUsager {
     }
 
     public void deleteUsager() {
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Supprimer  " + selectedUsager.getNom() + " " + selectedUsager.getPrenom() + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        Alert alert = new Alert(AlertType.CONFIRMATION,
+                "Supprimer  " + selectedUsager.getNom() + " " + selectedUsager.getPrenom() + " ?", ButtonType.YES,
+                ButtonType.NO, ButtonType.CANCEL);
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
@@ -217,11 +205,11 @@ public class ControllerUsager {
         }
         resetLabels();
     }
-    
+
     // ***********************************************************
     // Navigation
     // ***********************************************************
-    public void openMenuOeuvre(){
+    public void openMenuOeuvre() {
         try {
             // Charger le fichier FXML de la fenêtre pop-up
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MenuOeuvre.fxml"));
@@ -246,38 +234,45 @@ public class ControllerUsager {
     // // Emprunts
     // // ***********************************************************
     // public void getAllEmprunts() {
-    //     HelperEmprunt helperEmprunt = new HelperEmprunt();
-    //     ResultSet resultSet = helperEmprunt.selectAllEmprunt();
+    // HelperEmprunt helperEmprunt = new HelperEmprunt();
+    // ResultSet resultSet = helperEmprunt.selectAllEmprunt();
 
-    //     try {
-    //         while (resultSet.next()) {
-    //             int id = resultSet.getInt("id");
-    //             Date dateDebut = resultSet.getDate("dateDebut");
-    //             Date dateRendu = resultSet.getDate("dateRendu");
-    //             Date dateRenduReelle = resultSet.getDate("dateRenduReelle");
-    //             EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
+    // try {
+    // while (resultSet.next()) {
+    // int id = resultSet.getInt("id");
+    // Date dateDebut = resultSet.getDate("dateDebut");
+    // Date dateRendu = resultSet.getDate("dateRendu");
+    // Date dateRenduReelle = resultSet.getDate("dateRenduReelle");
+    // EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
 
-    //             HelperExemplaire helperExemplaire = new HelperExemplaire();
-    //             ResultSet resultExemplaire = helperExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
-    //             HelperOeuvre helperOeuvre = new HelperOeuvre();
-    //             ResultSet resultOeuvre = helperOeuvre.selectOeuvre(resultExemplaire.getInt("oeuvre"));
-    //             Oeuvre oeuvre = new Oeuvre(resultOeuvre.getString("titre"), resultOeuvre.getString("auteur"),
-    //                     resultOeuvre.getDate("datePublication"), GenreOeuvre.valueOf(resultOeuvre.getString("genre")));
-    //             Exemplaire exemplaire = new Exemplaire(resultExemplaire.getInt("id"),
-    //                     EtatExemplaire.valueOf(resultExemplaire.getString("etat")),
-    //                     resultExemplaire.getBoolean("disponible"), oeuvre);
+    // HelperExemplaire helperExemplaire = new HelperExemplaire();
+    // ResultSet resultExemplaire =
+    // helperExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
+    // HelperOeuvre helperOeuvre = new HelperOeuvre();
+    // ResultSet resultOeuvre =
+    // helperOeuvre.selectOeuvre(resultExemplaire.getInt("oeuvre"));
+    // Oeuvre oeuvre = new Oeuvre(resultOeuvre.getString("titre"),
+    // resultOeuvre.getString("auteur"),
+    // resultOeuvre.getDate("datePublication"),
+    // GenreOeuvre.valueOf(resultOeuvre.getString("genre")));
+    // Exemplaire exemplaire = new Exemplaire(resultExemplaire.getInt("id"),
+    // EtatExemplaire.valueOf(resultExemplaire.getString("etat")),
+    // resultExemplaire.getBoolean("disponible"), oeuvre);
 
-    //             HelperUsager helperUsager = new HelperUsager();
-    //             ResultSet resultUsager = helperUsager.selectUsager(resultSet.getString("usager"));
-    //             Usager usager = new Usager(resultUsager.getString("email"), resultUsager.getString("nom"),
-    //                     resultUsager.getString("prenom"), resultUsager.getInt("telephone"));
+    // HelperUsager helperUsager = new HelperUsager();
+    // ResultSet resultUsager =
+    // helperUsager.selectUsager(resultSet.getString("usager"));
+    // Usager usager = new Usager(resultUsager.getString("email"),
+    // resultUsager.getString("nom"),
+    // resultUsager.getString("prenom"), resultUsager.getInt("telephone"));
 
-    //             Emprunt emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
-    //             emprunts.add(emprunt);
-    //         }
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
+    // Emprunt emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle,
+    // etat, exemplaire, usager);
+    // emprunts.add(emprunt);
+    // }
+    // } catch (SQLException e) {
+    // e.printStackTrace();
+    // }
     // }
 
     // // ***********************************************************

@@ -1,5 +1,4 @@
-package ul.miage.patron.model;
-
+package ul.miage.patron.model.objets;
 
 import java.time.LocalDate;
 import ul.miage.patron.model.enumerations.GenreOeuvre;

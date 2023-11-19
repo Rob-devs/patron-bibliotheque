@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ul.miage.patron.controller.usagers.ControllerUsager;
 import ul.miage.patron.database.helpers.HelperOeuvre;
-import ul.miage.patron.model.Oeuvre;
 import ul.miage.patron.model.enumerations.GenreOeuvre;
+import ul.miage.patron.model.objets.Oeuvre;
 
 public class ControllerAddOeuvre {
     @FXML
@@ -24,7 +24,7 @@ public class ControllerAddOeuvre {
 
     @FXML
     ChoiceBox<GenreOeuvre> cbGenreOeuvre = new ChoiceBox<GenreOeuvre>();
-    
+
     @FXML
     Button btnConfirm, btnCancel;
 
@@ -36,21 +36,20 @@ public class ControllerAddOeuvre {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.parse(dpDate.getValue().format(formatter), formatter);
         Oeuvre oeuvre = new Oeuvre(
-            tfTitre.getText(),
-            tfAuteur.getText(),
-            localDate,
-            cbGenreOeuvre.getValue()
-        );
+                tfTitre.getText(),
+                tfAuteur.getText(),
+                localDate,
+                cbGenreOeuvre.getValue());
         HelperOeuvre helperOeuvre = new HelperOeuvre();
         helperOeuvre.insertOeuvre(oeuvre);
     }
 
-    public void fillCbGenreOeuvre(){
+    public void fillCbGenreOeuvre() {
         cbGenreOeuvre.setItems(FXCollections.observableArrayList(GenreOeuvre.values()));
         cbGenreOeuvre.setValue(cbGenreOeuvre.getItems().get(0));
     }
 
-    public void confirmAdd(){
+    public void confirmAdd() {
         insertOeuvre();
 
         ControllerUsager controllerBack = new ControllerUsager();
@@ -58,7 +57,7 @@ public class ControllerAddOeuvre {
 
         popupStage.close();
 
-        if(parentStage != null){
+        if (parentStage != null) {
             parentStage.show();
         }
     }

@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,9 +19,12 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ul.miage.patron.controller.exemplaires.ControllerAddExemplaire;
+import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.database.helpers.HelperOeuvre;
-import ul.miage.patron.model.Oeuvre;
+import ul.miage.patron.model.enumerations.EtatExemplaire;
 import ul.miage.patron.model.enumerations.GenreOeuvre;
+import ul.miage.patron.model.objets.Exemplaire;
+import ul.miage.patron.model.objets.Oeuvre;
 
 public class ControllerOeuvre {
     @FXML
@@ -31,6 +36,8 @@ public class ControllerOeuvre {
     ObservableList<Oeuvre> oeuvres = FXCollections.observableArrayList();
 
     Oeuvre selectedOeuvre = null;
+
+    List<Exemplaire> exemplaires = new ArrayList<Exemplaire>();
 
     public void initialize() {
         getAllOeuvre();
@@ -67,15 +74,14 @@ public class ControllerOeuvre {
             lblDate.setVisible(true);
             lblDate.setText("Date: " + oeuvre.getDatePublication());
 
-            HelperOeuvre helperOeuvre = new HelperOeuvre();
-            int nbExemplairesDispos = helperOeuvre.getNbExemplairesDispos(oeuvre.getTitre());
-            int nbExemplairesTotal = helperOeuvre.getNbExemplairesTotal(oeuvre.getTitre());
+            getAllExemplaires(oeuvre);
 
             lblExemplairesDispos.setVisible(true);
-            lblExemplairesDispos.setText("Exemplaires disponibles: " + nbExemplairesDispos);
+            lblExemplairesDispos.setText("Exemplaires disponibles: " + exemplaires.size());
 
             lblExemplairesTotal.setVisible(true);
-            lblExemplairesTotal.setText("Exemplaires totaux: " + nbExemplairesTotal);
+            lblExemplairesTotal
+                    .setText("Exemplaires totaux: " + exemplaires.stream().filter(e -> e.isDisponible()).count());
         }
     }
 
@@ -107,7 +113,32 @@ public class ControllerOeuvre {
                 oeuvres.add(oeuvre);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    // Sélectionner tous les exemplaires de l'oeuvre
+    public void getAllExemplaires(Oeuvre oeuvre) {
+
+        HelperExemplaire helper = new HelperExemplaire();
+        ResultSet resultSet = helper.selectAllExemplaire();
+
+        // Vider la liste avant de la remplir
+        exemplaires.clear();
+
+        try {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String etat = resultSet.getString("etat");
+                boolean disponible = resultSet.getString("disponible").toLowerCase() == "true";
+                String titre = resultSet.getString("oeuvre");
+                if (titre.equals(oeuvre.getTitre())) {
+                    Exemplaire e = new Exemplaire(id, EtatExemplaire.valueOf(etat), oeuvre);
+                    e.setDisponible(disponible);
+                    exemplaires.add(e);
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -126,14 +157,11 @@ public class ControllerOeuvre {
                 oeuvres.add(oeuvre);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         return oeuvre;
     }
-
-    
 
     // Ouvrir popup pour ajouter une oeuvre
     public void openPopupAddOeuvre() {
@@ -167,7 +195,7 @@ public class ControllerOeuvre {
         }
     }
 
-    public void openPopupaddExemplaire(){
+    public void openPopupaddExemplaire() {
         try {
             // Charger le fichier FXML de la fenêtre pop-up
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/AjouterExemplaire.fxml"));
@@ -200,7 +228,7 @@ public class ControllerOeuvre {
         }
     }
 
-    public void resetLabels(){
+    public void resetLabels() {
         lblTitle.setVisible(false);
         lblAuteur.setVisible(false);
         lblDate.setVisible(false);
@@ -209,7 +237,7 @@ public class ControllerOeuvre {
     // ***********************************************************
     // Navigation
     // ***********************************************************
-    public void openMenuUsager(){
+    public void openMenuUsager() {
         try {
             // Charger le fichier FXML de la fenêtre
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MenuBack.fxml"));

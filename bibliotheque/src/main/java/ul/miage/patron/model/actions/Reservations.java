@@ -1,4 +1,4 @@
-package ul.miage.patron.model;
+package ul.miage.patron.model.actions;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ul.miage.patron.model;
+package ul.miage.patron.model.objets;
 
 public class Usager {
 
@@ -7,7 +7,7 @@ public class Usager {
     private String prenom;
     private int telephone;
     private int penalites;
-    
+
     public Usager(String email, String nom, String prenom, int telephone) {
         this.email = email;
         this.prenom = nom;

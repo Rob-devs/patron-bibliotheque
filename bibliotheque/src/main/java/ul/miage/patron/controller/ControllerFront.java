@@ -10,9 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import ul.miage.patron.database.helpers.HelperUsager;
-import ul.miage.patron.model.Usager;
 import ul.miage.patron.model.enumerations.EtatEmprunt;
 import ul.miage.patron.model.enumerations.EtatExemplaire;
+import ul.miage.patron.model.objets.Usager;
 
 public class ControllerFront {
     @FXML

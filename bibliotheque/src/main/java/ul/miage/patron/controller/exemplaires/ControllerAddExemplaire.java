@@ -7,14 +7,14 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
 import ul.miage.patron.database.helpers.HelperExemplaire;
-import ul.miage.patron.model.Exemplaire;
-import ul.miage.patron.model.Oeuvre;
 import ul.miage.patron.model.enumerations.EtatExemplaire;
+import ul.miage.patron.model.objets.Exemplaire;
+import ul.miage.patron.model.objets.Oeuvre;
 
 public class ControllerAddExemplaire {
     @FXML
     Label lblTitre;
-    
+
     @FXML
     Button btnConfirm, btnCancel;
 
@@ -26,29 +26,28 @@ public class ControllerAddExemplaire {
 
     Oeuvre currentOeuvre = null;
 
-    public void fillInfos(){
+    public void fillInfos() {
         lblTitre.setVisible(true);
         lblTitre.setText(currentOeuvre.getTitre());
     }
 
     // Insérer un exemplaire
     public void insertExemplaire() {
-        
+
         Exemplaire exemplaire = new Exemplaire(
-            0,
-            cbEtatExemplaire.getValue(),
-            currentOeuvre
-        );
+                0,
+                cbEtatExemplaire.getValue(),
+                currentOeuvre);
         HelperExemplaire helperExemplaire = new HelperExemplaire();
         helperExemplaire.insertExemplaire(exemplaire);
     }
 
-    public void fillCbEtatExemplaire(){
+    public void fillCbEtatExemplaire() {
         cbEtatExemplaire.getItems().addAll(EtatExemplaire.values());
         cbEtatExemplaire.setValue(cbEtatExemplaire.getItems().get(0));
     }
 
-    public void confirmAdd(){
+    public void confirmAdd() {
         insertExemplaire();
 
         ControllerOeuvre controllerOeuvre = new ControllerOeuvre();
@@ -56,7 +55,7 @@ public class ControllerAddExemplaire {
 
         popupStage.close();
 
-        if(parentStage != null){
+        if (parentStage != null) {
             parentStage.show();
         }
     }

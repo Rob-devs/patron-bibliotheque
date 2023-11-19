@@ -1,4 +1,4 @@
-package ul.miage.patron.model;
+package ul.miage.patron.model.objets;
 
 import ul.miage.patron.model.enumerations.EtatExemplaire;
 

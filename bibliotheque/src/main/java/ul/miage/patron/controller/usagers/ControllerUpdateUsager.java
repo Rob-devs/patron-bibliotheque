@@ -5,21 +5,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ul.miage.patron.database.helpers.HelperUsager;
-import ul.miage.patron.model.Usager;
+import ul.miage.patron.model.objets.Usager;
 
 public class ControllerUpdateUsager {
     @FXML
     TextField tfNom, tfPrenom, tfMail, tfTelephone;
-    
+
     @FXML
     Button btnConfirm, btnCancel;
 
     private Stage popupStage;
     private Stage parentStage;
-    
+
     Usager currentUsager = null;
 
-    public void fillInfos(){
+    public void fillInfos() {
         tfNom.setText(currentUsager.getNom());
         tfPrenom.setText(currentUsager.getPrenom());
         tfMail.setText(currentUsager.getEmail());
@@ -37,7 +37,7 @@ public class ControllerUpdateUsager {
         helperUsager.updateUsager(usager, oldMail);
     }
 
-    public void confirmUpdate(){
+    public void confirmUpdate() {
         updateUsager(currentUsager);
 
         ControllerUsager controllerBack = new ControllerUsager();
@@ -45,7 +45,7 @@ public class ControllerUpdateUsager {
 
         popupStage.close();
 
-        if(parentStage != null){
+        if (parentStage != null) {
             parentStage.show();
         }
     }
