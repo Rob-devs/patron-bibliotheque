@@ -45,7 +45,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.oeuvres.ControllerOeuvre">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.emprunts.ControllerEmprunt">
   <children>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
@@ -53,7 +53,7 @@
           <children>
                   <VBox layoutX="14.0" layoutY="99.0" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Hyperlink onAction="#openMenuEmprunt" prefHeight="24.0" prefWidth="181.0" text="Emprunts">
+                        <Hyperlink disable="true" prefHeight="24.0" prefWidth="181.0" text="Emprunts" visited="true">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -69,7 +69,7 @@
                               <Insets bottom="10.0" left="10.0" top="10.0" />
                            </padding>
                         </Hyperlink>
-                        <Hyperlink disable="true" prefHeight="24.0" prefWidth="181.0" text="Oeuvres" visited="true">
+                        <Hyperlink onAction="#openMenuOeuvre" prefHeight="24.0" prefWidth="181.0" text="Oeuvres">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -101,14 +101,14 @@
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
-                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Oeuvres" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Emprunts" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                         <Pane layoutX="52.0" layoutY="73.0" prefHeight="337.0" prefWidth="343.0">
                            <children>
-                              <ListView fx:id="listViewOeuvre" layoutX="14.0" layoutY="14.0" prefHeight="312.0" prefWidth="313.0" />
+                              <ListView fx:id="listViewEmprunt" layoutX="14.0" layoutY="14.0" prefHeight="312.0" prefWidth="313.0" />
                            </children>
                         </Pane>
-                        <Button fx:id="btnAdd" layoutX="86.0" layoutY="426.0" mnemonicParsing="false" onAction="#openPopupAddOeuvre" text="Ajouter une oeuvre" />
-                        <Button fx:id="btnAddExemplaire" disable="true" layoutX="244.0" layoutY="426.0" mnemonicParsing="false" onAction="#openPopupaddExemplaire" text="Ajouter exemplaire" />
+                        <Button fx:id="btnAdd" layoutX="86.0" layoutY="426.0" mnemonicParsing="false" onAction="#openPopupAddEmprunt" text="Ajouter un emprunt" />
+                        <Button fx:id="btnRendre" disable="true" layoutX="244.0" layoutY="426.0" mnemonicParsing="false" onAction="#openPopupRendre" text="Déclarer rendu" />
               </children>
             </AnchorPane>
           </content>
@@ -116,15 +116,15 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Détails" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <Label fx:id="lblTitle" layoutX="20.0" layoutY="80.0" text="Label" visible="false">
+                  <Label fx:id="lblFullName" layoutX="20.0" layoutY="80.0" text="Label" visible="false">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblAuteur" layoutX="20.0" layoutY="150.0" text="Label" visible="false" />
-                  <Label fx:id="lblDate" layoutX="20.0" layoutY="220.0" text="Label" visible="false" />
-                  <Label fx:id="lblExemplairesDispos" layoutX="20.0" layoutY="290.0" text="Label" visible="false" />
-                  <Label fx:id="lblExemplairesTotal" layoutX="20.0" layoutY="360.0" text="Label" visible="false" />
+                  <Label fx:id="lblOeuvre" layoutX="20.0" layoutY="150.0" text="Label" visible="false" />
+                  <Label fx:id="lblDateDebut" layoutX="20.0" layoutY="220.0" text="Label" visible="false" />
+                  <Label fx:id="lblDateRendu" layoutX="20.0" layoutY="290.0" text="Label" visible="false" />
+                  <Label fx:id="lblDateRenduReelle" layoutX="20.0" layoutY="360.0" text="Label" visible="false" />
           </children>
         </AnchorPane>
       </items>

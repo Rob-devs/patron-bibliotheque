@@ -34,6 +34,7 @@ public class ControllerUsager {
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
     ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
 
+
     @FXML
     Button btnUpdate, btnDelete;
 
@@ -84,6 +85,10 @@ public class ControllerUsager {
         listViewUsager.setItems(usagers);
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
+    }
+
+    public ObservableList<Usager> getUsagers() {
+        return usagers;
     }
 
     // ***********************************************************
@@ -227,52 +232,20 @@ public class ControllerUsager {
         }
     }
 
-    // // ***********************************************************
-    // // Emprunts
-    // // ***********************************************************
-    // public void getAllEmprunts() {
-    // HelperEmprunt helperEmprunt = new HelperEmprunt();
-    // ResultSet resultSet = helperEmprunt.selectAllEmprunt();
+    @FXML
+    public void openMenuEmprunt(){
+        try{
+            App.switchScene("MenuEmprunt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
-    // try {
-    // while (resultSet.next()) {
-    // int id = resultSet.getInt("id");
-    // Date dateDebut = resultSet.getDate("dateDebut");
-    // Date dateRendu = resultSet.getDate("dateRendu");
-    // Date dateRenduReelle = resultSet.getDate("dateRenduReelle");
-    // EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
-
-    // HelperExemplaire helperExemplaire = new HelperExemplaire();
-    // ResultSet resultExemplaire =
-    // helperExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
-    // HelperOeuvre helperOeuvre = new HelperOeuvre();
-    // ResultSet resultOeuvre =
-    // helperOeuvre.selectOeuvre(resultExemplaire.getInt("oeuvre"));
-    // Oeuvre oeuvre = new Oeuvre(resultOeuvre.getString("titre"),
-    // resultOeuvre.getString("auteur"),
-    // resultOeuvre.getDate("datePublication"),
-    // GenreOeuvre.valueOf(resultOeuvre.getString("genre")));
-    // Exemplaire exemplaire = new Exemplaire(resultExemplaire.getInt("id"),
-    // EtatExemplaire.valueOf(resultExemplaire.getString("etat")),
-    // resultExemplaire.getBoolean("disponible"), oeuvre);
-
-    // HelperUsager helperUsager = new HelperUsager();
-    // ResultSet resultUsager =
-    // helperUsager.selectUsager(resultSet.getString("usager"));
-    // Usager usager = new Usager(resultUsager.getString("email"),
-    // resultUsager.getString("nom"),
-    // resultUsager.getString("prenom"), resultUsager.getInt("telephone"));
-
-    // Emprunt emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle,
-    // etat, exemplaire, usager);
-    // emprunts.add(emprunt);
-    // }
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-    // }
-
-    // // ***********************************************************
-    // // Réservations
-    // // ***********************************************************
+    @FXML public void openMenuReservation(){
+        try{
+            App.switchScene("MenuReservation");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

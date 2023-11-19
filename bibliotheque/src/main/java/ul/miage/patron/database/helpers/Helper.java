@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.List;
 
 import ul.miage.patron.database.SQLiteConnection;
@@ -76,6 +80,22 @@ public abstract class Helper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String convertFormatDate(String date) {
+        List<String> formatsPossibles = Arrays.asList("d/MM/yyyy", "dd/MM/yyyy", "d/M/yyyy", "dd/M/yyyy", "d/MM/yy", "dd/MM/yy", "d/M/yy", "dd/M/yy");
+
+        for (String format : formatsPossibles) {
+            try {
+                LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(format));
+                return localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } catch (DateTimeParseException e) {
+                // Le format actuel ne correspond pas, essayer le prochain
+            }
+        }
+
+        // Aucun format n'a fonctionné, retourner une chaîne vide ou gérer l'erreur selon vos besoins
+        return "";
     }
 
 }

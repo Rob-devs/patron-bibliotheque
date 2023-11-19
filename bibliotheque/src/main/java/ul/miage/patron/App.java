@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
 
 public class App extends Application {
 

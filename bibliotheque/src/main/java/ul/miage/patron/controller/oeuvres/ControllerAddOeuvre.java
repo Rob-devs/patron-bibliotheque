@@ -58,10 +58,11 @@ public class ControllerAddOeuvre {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.parse(dpDate.getValue().format(formatter), formatter);
         Oeuvre oeuvre = new Oeuvre(
-                tfTitre.getText(),
-                tfAuteur.getText(),
-                localDate,
-                cbGenreOeuvre.getValue());
+            tfTitre.getText(),
+            tfAuteur.getText(),
+            localDate,
+            cbGenreOeuvre.getValue()
+        );
         HelperOeuvre helperOeuvre = new HelperOeuvre();
         helperOeuvre.insertOeuvre(oeuvre);
     }

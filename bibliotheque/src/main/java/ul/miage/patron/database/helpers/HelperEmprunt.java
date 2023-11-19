@@ -2,8 +2,12 @@ package ul.miage.patron.database.helpers;
 
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import ul.miage.patron.model.actions.Emprunt;
 import ul.miage.patron.model.enumerations.EtatEmprunt;
@@ -14,13 +18,15 @@ public class HelperEmprunt extends Helper {
     // Rendre un exemplaire
     // ***********************************************************
     public void rendreExemplaire(Emprunt emprunt) {
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String dateRenduReelle = dateFormat.format(currentDate);
+        LocalDate now = LocalDate.now();
+        String dateRenduReelle = now.getDayOfMonth() + "/"
+                + now.getMonthValue() + "/" + now.getYear();
+
+        String formattedDateRenduReelle = super.convertFormatDate(dateRenduReelle);
 
         super.executeUpdate("UPDATE emprunt SET dateRenduReelle = ?, etat = ? WHERE id = ?",
                 Arrays.asList(
-                        dateRenduReelle,
+                        formattedDateRenduReelle,
                         EtatEmprunt.TERMINE.toString(),
                         emprunt.getId()));
     }
@@ -43,11 +49,21 @@ public class HelperEmprunt extends Helper {
     // Insérer un emprunt
     // ***********************************************************
     public void insertEmprunt(Emprunt emprunt) {
+        String dateDebut = emprunt.getDateDebut().getDayOfMonth() + "/"
+                + emprunt.getDateDebut().getMonthValue() + "/" + emprunt.getDateDebut().getYear();
+
+        String dateRendu = emprunt.getDateRendu().getDayOfMonth() + "/"
+                + emprunt.getDateRendu().getMonthValue() + "/" + emprunt.getDateRendu().getYear();
+        
+        // Formatter la date avec le nouveau modèle
+        String formattedDateDebut = super.convertFormatDate(dateDebut);
+        String formattedDateRendu = super.convertFormatDate(dateRendu);
+
         super.executeUpdate(
                 "INSERT INTO emprunt (dateDebut, dateRendu, exemplaire, usager) VALUES (?, ?, ?, ?)",
                 Arrays.asList(
-                        emprunt.getDateDebut().toString(),
-                        emprunt.getDateRendu().toString(),
+                        formattedDateDebut,
+                        formattedDateRendu,
                         emprunt.getExemplaire().getId(),
                         emprunt.getUsager().getEmail()));
     }
@@ -65,4 +81,5 @@ public class HelperEmprunt extends Helper {
                         emprunt.getUsager().getEmail(),
                         emprunt.getId()));
     }
+
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.emprunts.ControllerAddEmprunt">
+   <children>
+      <AnchorPane prefHeight="300.0" prefWidth="250.0">
+         <children>
+            <Label alignment="CENTER" layoutX="56.0" layoutY="25.0" text="Créer un emprunt" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnConfirm" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" />
+            <Button fx:id="btnCancel" layoutX="141.0" layoutY="254.0" mnemonicParsing="false" onAction="#close" text="Annuler" />
+            <ChoiceBox fx:id="cbExemplaire" layoutX="50.0" layoutY="160.0" prefHeight="25.0" prefWidth="149.0" />
+            <ChoiceBox fx:id="cbUsager" layoutX="50.0" layoutY="80.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="cbOeuvre" layoutX="50.0" layoutY="120.0" prefWidth="150.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

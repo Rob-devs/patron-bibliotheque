@@ -29,17 +29,9 @@ public class HelperOeuvre extends Helper {
     public void insertOeuvre(Oeuvre oeuvre) {
         String datePublication = oeuvre.getDatePublication().getDayOfMonth() + "/"
                 + oeuvre.getDatePublication().getMonthValue() + "/" + oeuvre.getDatePublication().getYear();
-        // Définir le modèle pour le format "D/MM/YYYY"
-        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-
-        // Définir le modèle pour le format "DD/MM/YYYY"
-        DateTimeFormatter targetFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        // Parser la chaîne pour obtenir un objet LocalDate
-        LocalDate localDate = LocalDate.parse(datePublication, originalFormatter);
 
         // Formatter la date avec le nouveau modèle
-        String formattedDatePublication = localDate.format(targetFormatter);
+        String formattedDatePublication = super.convertFormatDate(datePublication);
 
         super.executeUpdate("INSERT INTO oeuvre (titre, auteur, datePublication, genre) VALUES (?, ?, ?, ?)",
                 Arrays.asList(
