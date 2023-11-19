@@ -132,7 +132,8 @@ public class ControllerOeuvre {
                 String auteur = resultSet.getString("auteur");
                 LocalDate datePublication = LocalDate.parse(resultSet.getString("datePublication"), formatter);
                 GenreOeuvre genreOeuvre = GenreOeuvre.valueOf(resultSet.getString("genre"));
-                Oeuvre oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre);
+                int nbReservations = resultSet.getInt("nbReservations");
+                Oeuvre oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre, nbReservations);
                 oeuvres.add(oeuvre);
             }
         } catch (SQLException e) {
@@ -180,7 +181,8 @@ public class ControllerOeuvre {
                 String auteur = resultSet.getString("auteur");
                 LocalDate datePublication = LocalDate.parse(resultSet.getString("datePublication"), formatter);
                 GenreOeuvre genreOeuvre = GenreOeuvre.valueOf(resultSet.getString("genre"));
-                oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre);
+                int nbReservations = resultSet.getInt("nbReservations");
+                oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre, nbReservations);
             }
         } catch (SQLException e) {
             e.printStackTrace();

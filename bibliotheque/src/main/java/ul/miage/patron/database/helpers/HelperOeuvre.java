@@ -40,4 +40,24 @@ public class HelperOeuvre extends Helper {
                         formattedDatePublication,
                         oeuvre.getGenre().toString()));
     }
+
+    // ***********************************************************
+    // Incrémenter nb réservations
+    // ***********************************************************
+    public void incrementNbReservations(Oeuvre oeuvre) {
+        super.executeUpdate("UPDATE oeuvre SET nbReservations = ? WHERE titre = ?",
+                Arrays.asList(
+                        oeuvre.getNbReservations() + 1,
+                        oeuvre.getTitre()));
+    }
+
+    // ***********************************************************
+    // Décrémenter nb réservations
+    // ***********************************************************
+    public void decrementNbReservations(Oeuvre oeuvre) {
+        super.executeUpdate("UPDATE oeuvre SET nbReservations = ? WHERE titre = ?",
+                Arrays.asList(
+                        oeuvre.getNbReservations() - 1,
+                        oeuvre.getTitre()));
+    }
 }

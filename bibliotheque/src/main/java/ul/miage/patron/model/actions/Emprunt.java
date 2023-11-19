@@ -17,6 +17,7 @@ public class Emprunt {
     private Usager usager;
 
     public Emprunt(int id, LocalDate dateDebut, LocalDate dateRendu, Exemplaire exemplaire, Usager usager) {
+        this.id = id;
         this.dateDebut = dateDebut;
         this.dateRendu = dateRendu;
         this.etat = EtatEmprunt.EN_COURS;
@@ -26,8 +27,10 @@ public class Emprunt {
 
     public Emprunt(int id, LocalDate dateDebut, LocalDate dateRendu, LocalDate dateRenduRelle, EtatEmprunt etat, Exemplaire exemplaire,
             Usager usager) {
+        this.id = id;
         this.dateDebut = dateDebut;
         this.dateRendu = dateRendu;
+        this.dateRenduReelle = dateRenduRelle;
         this.etat = etat;
         this.exemplaire = exemplaire;
         this.usager = usager;

@@ -61,7 +61,8 @@ public class ControllerAddOeuvre {
             tfTitre.getText(),
             tfAuteur.getText(),
             localDate,
-            cbGenreOeuvre.getValue()
+            cbGenreOeuvre.getValue(),
+            0
         );
         HelperOeuvre helperOeuvre = new HelperOeuvre();
         helperOeuvre.insertOeuvre(oeuvre);

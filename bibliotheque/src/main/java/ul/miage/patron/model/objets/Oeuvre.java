@@ -11,12 +11,12 @@ public class Oeuvre {
     private GenreOeuvre genre;
     private int nbReservations;
 
-    public Oeuvre(String titre, String auteur, LocalDate date, GenreOeuvre genre) {
+    public Oeuvre(String titre, String auteur, LocalDate date, GenreOeuvre genre, int nbReservations) {
         this.titre = titre;
         this.auteur = auteur;
         this.datePublication = date;
         this.genre = genre;
-        this.nbReservations = 0;
+        this.nbReservations = nbReservations;
     }
 
     public String getTitre() {

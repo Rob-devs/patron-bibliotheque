@@ -4,12 +4,12 @@ import ul.miage.patron.model.enumerations.EtatReservation;
 import ul.miage.patron.model.objets.Oeuvre;
 import ul.miage.patron.model.objets.Usager;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Reservation {
     private int id;
-    private Date dateDebut;
-    private Date dateFin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
     private EtatReservation etat;
     private Oeuvre oeuvre;
     private Usager usager;
@@ -38,19 +38,19 @@ public class Reservation {
         this.usager = usager;
     }
 
-    public Date getDateDebut() {
+    public LocalDate getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
+    public LocalDate getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -62,9 +62,12 @@ public class Reservation {
         this.etat = etat;
     }
 
-    public Reservation(Date dateDebut, Date dateFin) {
+    public Reservation(int id, LocalDate dateDebut, LocalDate dateFin, EtatReservation etat, Oeuvre oeuvre, Usager usager) {
+        this.id = id;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-        this.etat = EtatReservation.EN_COURS;
+        this.etat = etat;
+        this.oeuvre = oeuvre;
+        this.usager = usager;
     }
 }

@@ -27,7 +27,7 @@ public class HelperEmprunt extends Helper {
         super.executeUpdate("UPDATE emprunt SET dateRenduReelle = ?, etat = ? WHERE id = ?",
                 Arrays.asList(
                         formattedDateRenduReelle,
-                        EtatEmprunt.TERMINE.toString(),
+                        emprunt.getEtat().toString(),
                         emprunt.getId()));
     }
 
@@ -82,4 +82,19 @@ public class HelperEmprunt extends Helper {
                         emprunt.getId()));
     }
 
+    // ***********************************************************
+    // Calculer le nombre d'emprunts
+    // ***********************************************************
+        public int countEmprunts() {
+                ResultSet result = super.execute("SELECT COUNT(*) FROM emprunt");
+                int count = 0;
+                try {
+                        while (result.next()) {
+                                count = result.getInt(1);
+                        }
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+                return count;
+        }
 }

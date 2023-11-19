@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.model.actions.Emprunt;
+import ul.miage.patron.model.enumerations.EtatEmprunt;
 import ul.miage.patron.model.enumerations.EtatExemplaire;
 
 public class ControllerRendre {
@@ -34,6 +35,7 @@ public class ControllerRendre {
     
         selectedEmprunt.setDateRenduReelle(dateRenduReelle);
         HelperEmprunt helperEmprunt = new HelperEmprunt();
+        selectedEmprunt.setEtat(EtatEmprunt.TERMINE);
         helperEmprunt.rendreExemplaire(selectedEmprunt);
 
         HelperExemplaire helperExemplaire = new HelperExemplaire();
