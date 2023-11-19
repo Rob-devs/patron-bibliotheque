@@ -54,10 +54,6 @@ public class ControllerAddExemplaire {
         controllerOeuvre.reloadListView();
 
         popupStage.close();
-
-        if (parentStage != null) {
-            parentStage.show();
-        }
     }
 
     public void setPopupStage(Stage popupStage) {
@@ -70,5 +66,12 @@ public class ControllerAddExemplaire {
 
     public void setCurrentOeuvre(Oeuvre currentOeuvre) {
         this.currentOeuvre = currentOeuvre;
+    }
+
+    public void close() {
+        // Close the stage (pop-up window)
+        if (popupStage != null) {
+            popupStage.close();
+        }
     }
 }

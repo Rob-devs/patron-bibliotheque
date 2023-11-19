@@ -45,7 +45,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.oeuvres.ControllerOeuvre">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.oeuvres.ControllerOeuvre">
   <children>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
@@ -108,7 +108,7 @@
                            </children>
                         </Pane>
                         <Button fx:id="btnAdd" layoutX="86.0" layoutY="426.0" mnemonicParsing="false" onAction="#openPopupAddOeuvre" text="Ajouter une oeuvre" />
-                        <Button fx:id="btnAddExemplaire" layoutX="244.0" layoutY="426.0" mnemonicParsing="false" onAction="#openPopupaddExemplaire" text="Ajouter exemplaire" />
+                        <Button fx:id="btnAddExemplaire" disable="true" layoutX="244.0" layoutY="426.0" mnemonicParsing="false" onAction="#openPopupaddExemplaire" text="Ajouter exemplaire" />
               </children>
             </AnchorPane>
           </content>

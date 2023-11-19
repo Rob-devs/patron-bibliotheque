@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -25,6 +26,7 @@ import ul.miage.patron.model.enumerations.EtatExemplaire;
 import ul.miage.patron.model.enumerations.GenreOeuvre;
 import ul.miage.patron.model.objets.Exemplaire;
 import ul.miage.patron.model.objets.Oeuvre;
+import ul.miage.patron.App;
 
 public class ControllerOeuvre {
     @FXML
@@ -33,12 +35,16 @@ public class ControllerOeuvre {
     @FXML
     Label lblTitle, lblAuteur, lblDate, lblExemplairesDispos, lblExemplairesTotal;
 
+    @FXML
+    Button btnAddExemplaire;
+
     ObservableList<Oeuvre> oeuvres = FXCollections.observableArrayList();
 
     Oeuvre selectedOeuvre = null;
 
     List<Exemplaire> exemplaires = new ArrayList<Exemplaire>();
 
+    @FXML
     public void initialize() {
         getAllOeuvre();
         listViewOeuvre.setItems(oeuvres);
@@ -59,6 +65,7 @@ public class ControllerOeuvre {
         listViewOeuvre.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedOeuvre = newValue;
             displayDetails(); // Appeler la méthode displayDetails lorsque la sélection change
+            btnAddExemplaire.setDisable(false);
         });
     }
 
@@ -77,17 +84,20 @@ public class ControllerOeuvre {
             getAllExemplaires(oeuvre);
 
             lblExemplairesDispos.setVisible(true);
-            lblExemplairesDispos.setText("Exemplaires disponibles: " + exemplaires.size());
+            lblExemplairesDispos
+                    .setText("Exemplaires disponibles: "
+                            + exemplaires.stream().filter(e -> e.isDisponible()).toList().size());
 
             lblExemplairesTotal.setVisible(true);
             lblExemplairesTotal
-                    .setText("Exemplaires totaux: " + exemplaires.stream().filter(e -> e.isDisponible()).count());
+                    .setText("Exemplaires totaux: " + exemplaires.size());
         }
     }
 
     public void reloadListView() {
         getAllOeuvre();
         listViewOeuvre.setItems(oeuvres);
+        btnAddExemplaire.setDisable(true);
     }
 
     // ***********************************************************
@@ -130,7 +140,7 @@ public class ControllerOeuvre {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String etat = resultSet.getString("etat");
-                boolean disponible = resultSet.getString("disponible").toLowerCase() == "true";
+                boolean disponible = resultSet.getString("disponible").toLowerCase().equals("true");
                 String titre = resultSet.getString("oeuvre");
                 if (titre.equals(oeuvre.getTitre())) {
                     Exemplaire e = new Exemplaire(id, EtatExemplaire.valueOf(etat), oeuvre);
@@ -221,8 +231,7 @@ public class ControllerOeuvre {
 
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
-            resetLabels();
-            reloadListView();
+            displayDetails();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -232,6 +241,8 @@ public class ControllerOeuvre {
         lblTitle.setVisible(false);
         lblAuteur.setVisible(false);
         lblDate.setVisible(false);
+        lblExemplairesDispos.setVisible(false);
+        lblExemplairesTotal.setVisible(false);
     }
 
     // ***********************************************************
@@ -239,22 +250,10 @@ public class ControllerOeuvre {
     // ***********************************************************
     public void openMenuUsager() {
         try {
-            // Charger le fichier FXML de la fenêtre
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MenuBack.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-
-            Stage newStage = new Stage();
-            newStage.setTitle("Menu usager");
-            newStage.setScene(scene);
-            newStage.show();
-
-            Stage mainStage = (Stage) listViewOeuvre.getScene().getWindow();
-            mainStage.close();
-
+            App.switchScene("MenuBack");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }

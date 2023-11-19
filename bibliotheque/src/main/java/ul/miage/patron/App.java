@@ -7,25 +7,40 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
 
 public class App extends Application {
+
 	private static Scene scene;
+	private static Stage primaryStage;
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		scene = new Scene(loadFXML("/vue/MenuBack"));
-		stage.setScene(scene);
-		stage.show();
-		stage.setResizable(false);
+
+		primaryStage = stage;
+
+		loadAndSetScene("MenuBack");
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
 	}
 
-	static void setRoot(String fxml) throws IOException {
-		scene.setRoot(loadFXML(fxml));
+	private static void loadAndSetScene(String fxml) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/vue/" + fxml + ".fxml"));
+		Parent root = fxmlLoader.load();
+
+		// Set the scene
+		scene = new Scene(root);
+		primaryStage.setScene(scene);
 	}
 
-	private static Parent loadFXML(String fxml) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-		return fxmlLoader.load();
+	public static void switchScene(String fxmlFile) {
+		try {
+			loadAndSetScene(fxmlFile);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {

@@ -31,6 +31,28 @@ public class ControllerAddOeuvre {
     private Stage popupStage;
     private Stage parentStage;
 
+    @FXML
+    public void initialize() {
+
+        tfTitre.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+        tfAuteur.textProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+        dpDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            checkValues();
+        });
+    }
+
+    private void checkValues() {
+        if (tfTitre.getText().isEmpty() || tfAuteur.getText().isEmpty() || dpDate.getValue().toString().isEmpty()) {
+            btnConfirm.setDisable(true);
+        } else {
+            btnConfirm.setDisable(false);
+        }
+    }
+
     // Insérer une oeuvre
     public void insertOeuvre() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -52,14 +74,7 @@ public class ControllerAddOeuvre {
     public void confirmAdd() {
         insertOeuvre();
 
-        ControllerUsager controllerBack = new ControllerUsager();
-        controllerBack.reloadListView();
-
         popupStage.close();
-
-        if (parentStage != null) {
-            parentStage.show();
-        }
     }
 
     public void setPopupStage(Stage popupStage) {
@@ -68,5 +83,12 @@ public class ControllerAddOeuvre {
 
     public void setParentStage(Stage parentStage) {
         this.parentStage = parentStage;
+    }
+
+    public void close() {
+        // Close the stage (pop-up window)
+        if (popupStage != null) {
+            popupStage.close();
+        }
     }
 }

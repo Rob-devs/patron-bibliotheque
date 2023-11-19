@@ -36,4 +36,11 @@ public class ControllerUpdateOeuvre {
         oeuvre.setDatePublication(dpDate.getValue());
         oeuvre.setGenre(cbGenreOeuvre.getValue());
     }
+
+    public void close() {
+        // Close the stage (pop-up window)
+        if (popupStage != null) {
+            popupStage.close();
+        }
+    }
 }

@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -17,6 +18,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ul.miage.patron.App;
 import ul.miage.patron.database.helpers.HelperUsager;
 import ul.miage.patron.model.actions.Emprunt;
 import ul.miage.patron.model.objets.Usager;
@@ -32,8 +34,12 @@ public class ControllerUsager {
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
     ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
 
+    @FXML
+    Button btnUpdate, btnDelete;
+
     Usager selectedUsager = null;
 
+    @FXML
     public void initialize() {
         getAllUsager();
         listViewUsager.setItems(usagers);
@@ -54,6 +60,8 @@ public class ControllerUsager {
         listViewUsager.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedUsager = newValue;
             displayDetails(); // Appeler la méthode displayDetails lorsque la sélection change
+            btnUpdate.setDisable(false);
+            btnDelete.setDisable(false);
         });
     }
 
@@ -74,6 +82,8 @@ public class ControllerUsager {
     public void reloadListView() {
         getAllUsager();
         listViewUsager.setItems(usagers);
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
     }
 
     // ***********************************************************
@@ -93,7 +103,7 @@ public class ControllerUsager {
                 String email = resultSet.getString("email");
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
-                int telephone = resultSet.getInt("telephone");
+                String telephone = resultSet.getString("telephone");
                 Usager usager = new Usager(email, nom, prenom, telephone);
                 usagers.add(usager);
                 Usagers.setUsagers(usagers);
@@ -112,7 +122,7 @@ public class ControllerUsager {
             while (resultSet.next()) {
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
-                int telephone = resultSet.getInt("telephone");
+                String telephone = resultSet.getString("telephone");
                 usager = new Usager(email, nom, prenom, telephone);
                 usagers.add(usager);
             }
@@ -179,8 +189,7 @@ public class ControllerUsager {
 
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
-            resetLabels();
-            reloadListView();
+            displayDetails();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -209,22 +218,10 @@ public class ControllerUsager {
     // ***********************************************************
     // Navigation
     // ***********************************************************
+    @FXML
     public void openMenuOeuvre() {
         try {
-            // Charger le fichier FXML de la fenêtre pop-up
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MenuOeuvre.fxml"));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-
-            Stage newStage = new Stage();
-            newStage.setTitle("Menu oeuvre");
-            newStage.setScene(scene);
-            newStage.show();
-
-            Stage mainStage = (Stage) listViewUsager.getScene().getWindow();
-            mainStage.close();
-
+            App.switchScene("MenuOeuvre");
         } catch (Exception e) {
             e.printStackTrace();
         }
