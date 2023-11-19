@@ -1,7 +1,10 @@
-package ul.miage.patron.model;
+package ul.miage.patron.model.actions;
 
 import ul.miage.patron.model.enumerations.EtatEmprunt;
-import ul.miage.patron.utilities.Date;
+import ul.miage.patron.model.objets.Exemplaire;
+import ul.miage.patron.model.objets.Usager;
+
+import java.util.Date;
 
 public class Emprunt {
 
@@ -12,6 +15,21 @@ public class Emprunt {
     private EtatEmprunt etat;
     private Exemplaire exemplaire;
     private Usager usager;
+
+    public Emprunt(Date dateDebut, Date dateRendu) {
+        this.dateDebut = dateDebut;
+        this.dateRendu = dateRendu;
+        this.etat = EtatEmprunt.EN_COURS;
+    }
+
+    public Emprunt(int id, Date dateDebut, Date dateRendu, Date dateRenduRelle, EtatEmprunt etat, Exemplaire exemplaire,
+            Usager usager) {
+        this.dateDebut = dateDebut;
+        this.dateRendu = dateRendu;
+        this.etat = etat;
+        this.exemplaire = exemplaire;
+        this.usager = usager;
+    }
 
     public int getId() {
         return id;
@@ -51,12 +69,6 @@ public class Emprunt {
 
     public void setEtat(EtatEmprunt etat) {
         this.etat = etat;
-    }
-
-    public Emprunt(Date dateDebut, Date dateRendu) {
-        this.dateDebut = dateDebut;
-        this.dateRendu = dateRendu;
-        this.etat = EtatEmprunt.EN_COURS;
     }
 
     public Exemplaire getExemplaire() {

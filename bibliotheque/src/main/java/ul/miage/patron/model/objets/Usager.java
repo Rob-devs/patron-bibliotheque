@@ -1,47 +1,35 @@
-package ul.miage.patron.model;
+package ul.miage.patron.model.objets;
 
 public class Usager {
 
-    private int id;
-
-    private String prenom;
-    private String nom;
     private String email;
-
+    private String nom;
+    private String prenom;
     private int telephone;
     private int penalites;
 
-    public Usager(int id, String name, String surname, String email, int telephone) {
-        this.id = id;
-        this.prenom = name;
-        this.nom = surname;
+    public Usager(String email, String nom, String prenom, int telephone) {
         this.email = email;
+        this.prenom = nom;
+        this.nom = prenom;
         this.telephone = telephone;
         this.penalites = 0;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String surname) {
-        this.nom = surname;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getPrenom() {
         return prenom;
     }
 
-    public void setPrenom(String name) {
-        this.prenom = name;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public String getEmail() {
@@ -70,5 +58,9 @@ public class Usager {
 
     public void addPenalite() {
         this.penalites++;
+    }
+
+    public static Usager identifier(String email) {
+        return Usagers.identifier(email);
     }
 }
