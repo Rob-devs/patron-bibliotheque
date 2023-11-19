@@ -138,12 +138,19 @@ public class ControllerReservation {
 
     public Reservation selectReservation(int id){
         HelperReservation helperReservation = new HelperReservation();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         ResultSet resultSet = helperReservation.selectReservation(id);
         Reservation reservation = null;
         try{
             while(resultSet.next()){
-                LocalDate dateDebut = LocalDate.parse(resultSet.getString("dateDebut"));
-                LocalDate dateFin = LocalDate.parse(resultSet.getString("dateFin"));
+                LocalDate dateDebut = LocalDate.parse(resultSet.getString("dateDebut"), formatter);
+                
+                LocalDate dateFin = null;
+                if(resultSet.getString("dateFin") != null){
+                    dateFin = LocalDate.parse(resultSet.getString("dateFin"), formatter);
+                } 
+
                 EtatReservation etat = EtatReservation.valueOf(resultSet.getString("etat"));
                 
                 ControllerOeuvre ControllerOeuvre = new ControllerOeuvre();

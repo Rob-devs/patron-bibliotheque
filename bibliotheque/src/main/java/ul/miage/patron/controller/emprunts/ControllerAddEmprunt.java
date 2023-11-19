@@ -8,13 +8,19 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
+import ul.miage.patron.controller.reservations.ControllerReservation;
 import ul.miage.patron.controller.usagers.ControllerUsager;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
+import ul.miage.patron.database.helpers.HelperReservation;
 import ul.miage.patron.model.actions.Emprunt;
+import ul.miage.patron.model.actions.Reservation;
 import ul.miage.patron.model.objets.Exemplaire;
 import ul.miage.patron.model.objets.Oeuvre;
 import ul.miage.patron.model.objets.Usager;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -66,6 +72,19 @@ public class ControllerAddEmprunt {
 
         HelperExemplaire helperExemplaire = new HelperExemplaire();
         helperExemplaire.switchDisponible(emprunt.getExemplaire());
+
+        HelperReservation helperReservation = new HelperReservation();
+        ResultSet resultSetReservation = helperReservation.getExistingReservation(cbUsager.getValue(), cbOeuvre.getValue());
+        try {
+            if (resultSetReservation.next()) {
+                ControllerReservation controllerReservation = new ControllerReservation();
+                Reservation reservation = controllerReservation.selectReservation(resultSetReservation.getInt("id"));
+
+                helperReservation.annulerReservation(reservation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void fillCbUsager(){
@@ -167,4 +186,6 @@ public class ControllerAddEmprunt {
         int nextId = helperEmprunt.countEmprunts() + 1;
         return nextId;
     }
+
+    
 }

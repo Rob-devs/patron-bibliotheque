@@ -144,13 +144,17 @@ public class ControllerEmprunt {
 
     public Emprunt selectEmprunt(int id){
         HelperEmprunt helperEmprunt = new HelperEmprunt();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         ResultSet resultSet = helperEmprunt.selectEmprunt(id);
         Emprunt emprunt = null;
         try{
             while(resultSet.next()){
                 LocalDate dateDebut = LocalDate.parse(resultSet.getString("dateDebut"));
                 LocalDate dateRendu = LocalDate.parse(resultSet.getString("dateRendu"));
-                LocalDate dateRenduReelle = LocalDate.parse(resultSet.getString("dateRenduReelle"));
+                LocalDate dateRenduReelle = null;
+                if(resultSet.getString("dateRenduReelle") != null){
+                    dateRenduReelle = LocalDate.parse(resultSet.getString("dateRenduReelle"), formatter);
+                } 
                 EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
                 
                 ControllerExemplaire controllerExemplaire = new ControllerExemplaire();
@@ -159,7 +163,11 @@ public class ControllerEmprunt {
                 ControllerUsager controllerUsager = new ControllerUsager();
                 Usager usager = controllerUsager.selectUsager(resultSet.getString("usager"));
 
-                emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
+                if(dateRenduReelle == null){
+                    emprunt = new Emprunt(id, dateDebut, dateRendu, exemplaire, usager);
+                } else {
+                    emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
+                }
             }
         } catch (SQLException e){
             e.printStackTrace();

@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 import ul.miage.patron.model.actions.Reservation;
 import ul.miage.patron.model.enumerations.EtatReservation;
+import ul.miage.patron.model.objets.Oeuvre;
+import ul.miage.patron.model.objets.Usager;
 
 public class HelperReservation extends Helper {
 
@@ -80,5 +82,15 @@ public class HelperReservation extends Helper {
             e.printStackTrace();
         }
         return count;
+    }
+
+    // ***********************************************************
+    // Vérifier si une réservation existe pour un usager et pour une oeuvre
+    // ***********************************************************
+    public ResultSet getExistingReservation(Usager usager, Oeuvre oeuvre) {
+        return super.execute("SELECT * FROM reservation WHERE usager = ? AND oeuvre = ?",
+                Arrays.asList(
+                        usager.getEmail(),
+                        oeuvre.getTitre()));
     }
 }
