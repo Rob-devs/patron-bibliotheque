@@ -18,8 +18,21 @@
                      <Font size="18.0" />
                   </font>
                </Label>
-               <ChoiceBox fx:id="cbUsager" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
-               <ChoiceBox fx:id="cbOeuvre" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+
+               <HBox spacing="10">
+                  <Label text="Usager:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+               </HBox>
+               <HBox spacing="10">
+                  <ChoiceBox fx:id="cbUsager" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+               </HBox>
+
+               <HBox spacing="10">
+                  <Label text="Oeuvre:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+               </HBox>
+               <HBox spacing="10">
+                  <ChoiceBox fx:id="cbOeuvre" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+               </HBox>
+
                <HBox spacing="10" alignment="CENTER">
                   <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
                   <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#close" text="Annuler" style="-fx-background-color: #F44336; -fx-text-fill: white;" />

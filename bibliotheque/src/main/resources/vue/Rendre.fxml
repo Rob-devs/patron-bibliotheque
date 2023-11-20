@@ -17,8 +17,8 @@
                     <Font size="18.0" />
                 </font>
             </Label>
-            <ChoiceBox fx:id="cbEtatExemplaire" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
             <Text text="Veuillez indiquer le nouvel état de l'exemplaire si celui-ci a été détérioré pendant l'emprunt" style="-fx-font-size: 12px; -fx-fill: #ECF0F1; -fx-wrap-text: true;" />
+            <ChoiceBox fx:id="cbEtatExemplaire" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
             <HBox spacing="10" alignment="CENTER">
                 <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
                 <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#close" text="Annuler" style="-fx-background-color: #F44336; -fx-text-fill: white;" />

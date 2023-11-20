@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.oeuvres.ControllerAddOeuvre">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.oeuvres.ControllerAddOeuvre">
    <children>
       <AnchorPane prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #34495E;">
          <children>
@@ -20,16 +20,41 @@
                      <Font size="18.0" />
                   </font>
                </Label>
-               <TextField fx:id="tfTitre" promptText="Titre" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
-               <TextField fx:id="tfAuteur" promptText="Auteur" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
-               <DatePicker fx:id="dpDate" prefHeight="25.0" prefWidth="200.0" promptText="Date de publication" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
-               <ChoiceBox fx:id="cbGenreOeuvre" prefHeight="25.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;">
-                  <style>
-                     -fx-background-color: #2C3E50; /* Couleur de fond */
-                     -fx-control-inner-background: #2C3E50; /* Couleur intérieure du contrôle */
-                     -fx-text-fill: #ECF0F1; /* Couleur du texte */
-                  </style>
-               </ChoiceBox>
+
+               <HBox spacing="10">
+                  <Label text="Titre:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+               </HBox>
+               <HBox spacing="10">
+                  <TextField fx:id="tfTitre" promptText="Titre" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+               </HBox>
+
+               <HBox spacing="10">
+                  <Label text="Auteur:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+               </HBox>
+               <HBox spacing="10">
+                  <TextField fx:id="tfAuteur" promptText="Auteur" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+               </HBox>
+
+               <HBox spacing="10">
+                  <Label text="Date de publication:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+               </HBox>
+               <HBox spacing="10">
+                  <DatePicker fx:id="dpDate" prefHeight="25.0" prefWidth="200.0" promptText="Date de publication" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+               </HBox>
+
+               <HBox spacing="10">
+                  <Label text="Genre:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+               </HBox>
+               <HBox spacing="10">
+                  <ChoiceBox fx:id="cbGenreOeuvre" prefHeight="25.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;">
+                     <style>
+                        -fx-background-color: #2C3E50; /* Couleur de fond */
+                        -fx-control-inner-background: #2C3E50; /* Couleur intérieure du contrôle */
+                        -fx-text-fill: #ECF0F1; /* Couleur du texte */
+                     </style>
+                  </ChoiceBox>
+               </HBox>
+
                <HBox spacing="10" alignment="CENTER">
                   <Button fx:id="btnConfirm" disable="true" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
                   <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#close" text="Annuler" style="-fx-background-color: #F44336; -fx-text-fill: white;" />
