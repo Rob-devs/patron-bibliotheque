@@ -4,23 +4,34 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.exemplaires.ControllerAddExemplaire">
    <children>
-      <AnchorPane prefHeight="300.0" prefWidth="250.0">
+      <AnchorPane prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #34495E;">
          <children>
-            <Label alignment="CENTER" layoutX="50.0" layoutY="25.0" text="Ajouter exemplaire" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnConfirm" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" />
-            <Button fx:id="btnCancel" layoutX="141.0" layoutY="254.0" mnemonicParsing="false" onAction="#close" text="Annuler" />
-            <ChoiceBox fx:id="cbEtatExemplaire" layoutX="50.0" layoutY="137.0" prefHeight="25.0" prefWidth="149.0" />
-            <Label fx:id="lblTitre" alignment="CENTER" contentDisplay="CENTER" layoutY="52.0" prefHeight="17.0" prefWidth="252.0" text="Label" textAlignment="CENTER" />
-            <Label layoutX="116.0" layoutY="119.0" text="Etat" />
+            <VBox alignment="CENTER" layoutX="25.0" layoutY="25.0" spacing="10">
+               <Label text="Ajouter exemplaire" textFill="#ECF0F1">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblTitre" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Label" textFill="#ECF0F1" style="-fx-font-size: 14px;"/>
+               <Label text="Etat" textFill="#ECF0F1" style="-fx-font-size: 14px;" />
+               <ChoiceBox fx:id="cbEtatExemplaire" prefHeight="25.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 200px;">
+                  <style>
+                     -fx-background-color: #2C3E50; /* Couleur de fond */
+                     -fx-control-inner-background: #2C3E50; /* Couleur intérieure du contrôle */
+                     -fx-text-fill: #ECF0F1; /* Couleur du texte */
+                  </style>
+               </ChoiceBox>
+               <HBox spacing="10" alignment="CENTER">
+                  <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                  <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#close" text="Annuler" style="-fx-background-color: #F44336; -fx-text-fill: white;" />
+               </HBox>
+            </VBox>
          </children>
       </AnchorPane>
    </children>

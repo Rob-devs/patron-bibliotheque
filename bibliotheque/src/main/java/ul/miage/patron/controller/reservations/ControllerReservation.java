@@ -128,7 +128,8 @@ public class ControllerReservation {
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String telephone = resultSet.getString("telephone");
-                Usager usager = new Usager(email, nom, prenom, telephone);
+                int penalites = resultSet.getInt("penalites");
+                Usager usager = new Usager(email, nom, prenom, telephone, penalites);
                 usagers.add(usager);
             }
         } catch (SQLException e) {
@@ -239,7 +240,7 @@ public class ControllerReservation {
     }
 
     // Ouvrir popup pour ajouter une réservation
-    public void openPopupAddEmprunt() {
+    public void openPopupAddReservation() {
         try {
             // Charger le fichier FXML de la fenêtre pop-up
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/AjouterReservation.fxml"));

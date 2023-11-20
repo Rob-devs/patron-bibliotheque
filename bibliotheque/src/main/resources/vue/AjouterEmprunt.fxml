@@ -4,24 +4,30 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.emprunts.ControllerAddEmprunt">
-   <children>
-      <AnchorPane prefHeight="300.0" prefWidth="250.0">
-         <children>
-            <Label alignment="CENTER" layoutX="56.0" layoutY="25.0" text="Créer un emprunt" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnConfirm" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" />
-            <Button fx:id="btnCancel" layoutX="141.0" layoutY="254.0" mnemonicParsing="false" onAction="#close" text="Annuler" />
-            <ChoiceBox fx:id="cbExemplaire" layoutX="50.0" layoutY="160.0" prefHeight="25.0" prefWidth="149.0" />
-            <ChoiceBox fx:id="cbUsager" layoutX="50.0" layoutY="80.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="cbOeuvre" layoutX="50.0" layoutY="120.0" prefWidth="150.0" />
-         </children>
-      </AnchorPane>
-   </children>
+    <children>
+        <AnchorPane prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #34495E;">
+            <children>
+                <VBox alignment="CENTER" layoutX="25.0" layoutY="25.0" spacing="10">
+                    <Label text="Créer un emprunt" textFill="#ECF0F1">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </Label>
+                    <ChoiceBox fx:id="cbUsager" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+                    <ChoiceBox fx:id="cbOeuvre" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+                    <ChoiceBox fx:id="cbExemplaire" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+                    
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button fx:id="btnConfirm" layoutX="50.0" layoutY="254.0" disable="true" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                        <Button fx:id="btnCancel" layoutX="141.0" layoutY="254.0" mnemonicParsing="false" onAction="#close" text="Annuler" style="-fx-background-color: #F44336; -fx-text-fill: white;" />
+                    </HBox>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>

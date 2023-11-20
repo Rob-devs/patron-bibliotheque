@@ -272,9 +272,11 @@ public class ControllerAddEmprunt {
         if (cbExemplaire.getItems().size() > 0) {
             cbExemplaire.setDisable(false);
             cbExemplaire.setValue(cbExemplaire.getItems().get(0));
+            btnConfirm.setDisable(false);
         } else {
             cbExemplaire.setDisable(true);
             cbExemplaire.setValue(null);
+            btnConfirm.setDisable(true);
         }
 
     }
