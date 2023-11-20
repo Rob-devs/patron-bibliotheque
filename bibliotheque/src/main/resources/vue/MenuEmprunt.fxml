@@ -54,8 +54,8 @@
                                 </style>
                             </ListView>
                             <VBox alignment="CENTER" spacing="10">
-                                <Button fx:id="btnAdd" onAction="#openPopupAddEmprunt" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-min-width: 80px; -fx-font-weight: bold;" text="Ajouter un emprunt" />
-                                <Button fx:id="btnRendre" disable="true" onAction="#openPopupRendre" style="-fx-background-color: #FFC107; -fx-text-fill: white; -fx-min-width: 80px; -fx-font-weight: bold;" text="Déclarer rendu" />
+                                <Button fx:id="btnAdd" onAction="#openPopupAddEmprunt" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-min-width: 130px; -fx-font-weight: bold;" text="Ajouter un emprunt" />
+                                <Button fx:id="btnRendre" disable="true" onAction="#openPopupRendre" style="-fx-background-color: #FFC107; -fx-text-fill: white; -fx-min-width: 130px; -fx-font-weight: bold;" text="Déclarer rendu" />
                             </VBox>
                         </HBox>
                     </VBox>
