@@ -103,7 +103,8 @@ public class ControllerEmprunt {
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String telephone = resultSet.getString("telephone");
-                Usager usager = new Usager(email, nom, prenom, telephone);
+                int penalites = resultSet.getInt("penalites");
+                Usager usager = new Usager(email, nom, prenom, telephone, penalites);
                 usagers.add(usager);
             }
         } catch (SQLException e) {
@@ -174,8 +175,11 @@ public class ControllerEmprunt {
             lblDateRendu.setVisible(true);
             lblDateRendu.setText("Date de rendu: " + emprunt.getDateRendu());
 
-            lblDateRenduReelle.setVisible(true);
-            lblDateRenduReelle.setText("Date de rendu réelle: " + emprunt.getDateRenduReelle());
+            if(emprunt.getDateRenduReelle() != null){
+                lblDateRenduReelle.setVisible(true);
+                lblDateRenduReelle.setText("Date de rendu réelle: " + emprunt.getDateRenduReelle());
+            }
+            
         }
     }
 

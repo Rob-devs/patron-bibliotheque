@@ -25,24 +25,26 @@ public class HelperUsager extends Helper {
     // Insérer un usager
     // ***********************************************************
     public void insertUsager(Usager usager) {
-        super.execute("INSERT INTO usager (email, nom, prenom, telephone) VALUES (?, ?, ?, ?)",
+        super.execute("INSERT INTO usager (email, nom, prenom, telephone, penalites) VALUES (?, ?, ?, ?, ?)",
                 Arrays.asList(
                         usager.getEmail(),
                         usager.getNom(),
                         usager.getPrenom(),
-                        usager.getTelephone()));
+                        usager.getTelephone(),
+                        usager.getPenalites()));
     }
 
     // ***********************************************************
     // Modifier un usager
     // ***********************************************************
     public void updateUsager(Usager usager, String oldMail) {
-        super.execute("UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ? WHERE email = ?",
+        super.execute("UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ?, penalites = ? WHERE email = ?",
                 Arrays.asList(
                         usager.getEmail(),
                         usager.getNom(),
                         usager.getPrenom(),
                         usager.getTelephone(),
+                        usager.getPenalites(),
                         oldMail));
     }
 

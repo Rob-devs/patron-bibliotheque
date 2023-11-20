@@ -29,7 +29,7 @@ public class ControllerUsager {
     ListView<Usager> listViewUsager = new ListView<Usager>();
 
     @FXML
-    Label lblFullName, lblEmail, lblTelephone;
+    Label lblFullName, lblEmail, lblTelephone, lblPenalites;
 
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
     ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
@@ -77,6 +77,9 @@ public class ControllerUsager {
 
             lblTelephone.setVisible(true);
             lblTelephone.setText("Téléphone: " + usager.getTelephone());
+
+            lblPenalites.setVisible(true);
+            lblPenalites.setText("Nombre de pénalités: " + usager.getPenalites());
         }
     }
 
@@ -109,7 +112,8 @@ public class ControllerUsager {
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String telephone = resultSet.getString("telephone");
-                Usager usager = new Usager(email, nom, prenom, telephone);
+                int penalites = resultSet.getInt("penalites");
+                Usager usager = new Usager(email, nom, prenom, telephone, penalites);
                 usagers.add(usager);
                 Usagers.setUsagers(usagers);
             }
@@ -128,7 +132,8 @@ public class ControllerUsager {
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String telephone = resultSet.getString("telephone");
-                usager = new Usager(email, nom, prenom, telephone);
+                int penalites = resultSet.getInt("penalites");
+                usager = new Usager(email, nom, prenom, telephone, penalites);
                 usagers.add(usager);
             }
         } catch (SQLException e) {
@@ -204,6 +209,7 @@ public class ControllerUsager {
         lblFullName.setText("");
         lblEmail.setText("");
         lblTelephone.setText("");
+        lblPenalites.setText("");
     }
 
     public void deleteUsager() {

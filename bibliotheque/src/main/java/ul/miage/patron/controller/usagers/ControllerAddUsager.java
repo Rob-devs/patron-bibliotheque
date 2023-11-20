@@ -45,7 +45,8 @@ public class ControllerAddUsager {
                 tfMail.getText(),
                 tfNom.getText(),
                 tfPrenom.getText(),
-                tfTelephone.getText());
+                tfTelephone.getText(),
+                0);
         HelperUsager helperUsager = new HelperUsager();
         helperUsager.insertUsager(usager);
     }

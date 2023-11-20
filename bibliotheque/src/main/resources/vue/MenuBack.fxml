@@ -124,6 +124,7 @@
                   </Label>
                   <Label fx:id="lblEmail" layoutX="20.0" layoutY="150.0" text="Label" visible="false" />
                   <Label fx:id="lblTelephone" layoutX="20.0" layoutY="220.0" text="Label" visible="false" />
+                  <Label fx:id="lblPenalites" layoutX="20.0" layoutY="290.0" text="Label" visible="false" />
           </children>
         </AnchorPane>
       </items>
