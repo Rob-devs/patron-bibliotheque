@@ -9,6 +9,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
+import ul.miage.patron.database.helpers.HelperUsager;
 import ul.miage.patron.model.actions.Emprunt;
 import ul.miage.patron.model.enumerations.EtatEmprunt;
 import ul.miage.patron.model.enumerations.EtatExemplaire;
@@ -41,9 +42,17 @@ public class ControllerRendre {
         HelperExemplaire helperExemplaire = new HelperExemplaire();
         helperExemplaire.switchDisponible(selectedEmprunt.getExemplaire());
 
-        if(cbEtatExemplaire.getValue() != selectedEmprunt.getExemplaire().getEtat()){
+        if (cbEtatExemplaire.getValue() != selectedEmprunt.getExemplaire().getEtat()) {
             selectedEmprunt.getExemplaire().setEtat(cbEtatExemplaire.getValue());
             helperExemplaire.updateEtat(selectedEmprunt.getExemplaire());
+
+            HelperUsager helperUsager = new HelperUsager();
+            helperUsager.incrementPenalites(selectedEmprunt.getUsager());
+        }
+
+        if (selectedEmprunt.getDateRenduReelle().compareTo(selectedEmprunt.getDateRendu()) > 0) {
+            HelperUsager helperUsager = new HelperUsager();
+            helperUsager.incrementPenalites(selectedEmprunt.getUsager());
         }
     }
 

@@ -54,4 +54,20 @@ public class HelperUsager extends Helper {
                 Arrays.asList(usager.getEmail()));
     }
 
+    // ***********************************************************
+    // Incrémenter le nombre de pénalités
+    // ***********************************************************
+    public void incrementPenalites(Usager usager) {
+        super.executeUpdate("UPDATE usager SET penalites = penalites + 1 WHERE email = ?",
+                Arrays.asList(usager.getEmail()));
+    }
+
+    // ***********************************************************
+    // Décrémenter le nombre de pénalités
+    // ***********************************************************
+    public void decrementPenalites(Usager usager) {
+        super.executeUpdate("UPDATE usager SET penalites = penalites - 1 WHERE email = ?",
+                Arrays.asList(usager.getEmail()));
+    }
+
 }
