@@ -135,6 +135,8 @@ public class ControllerUsager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         return usager;

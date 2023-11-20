@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
 import ul.miage.patron.controller.usagers.ControllerUsager;
+import ul.miage.patron.database.helpers.Helper;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.database.helpers.HelperOeuvre;
@@ -37,22 +38,21 @@ public class ControllerAddReservation {
     private Stage parentStage;
 
     @FXML
-    public void initialize(){
-        
+    public void initialize() {
+
     }
 
-    public void insertReservation(){
+    public void insertReservation() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dateDebut = LocalDate.parse(LocalDate.now().format(formatter), formatter);
 
         Reservation reservation = new Reservation(
-            getNextIdTable(),
-            dateDebut,
-            null,
-            EtatReservation.EN_COURS,
-            cbOeuvre.getValue(),
-            cbUsager.getValue()
-        );
+                getNextIdTable(),
+                dateDebut,
+                null,
+                EtatReservation.EN_COURS,
+                cbOeuvre.getValue(),
+                cbUsager.getValue());
         HelperReservation helperReservation = new HelperReservation();
         helperReservation.insertReservation(reservation);
 
@@ -60,10 +60,10 @@ public class ControllerAddReservation {
         helperOeuvre.incrementNbReservations(cbOeuvre.getValue());
     }
 
-    public void fillCbUsager(){
+    public void fillCbUsager() {
         ControllerUsager controllerUsager = new ControllerUsager();
         controllerUsager.getAllUsager();
-        
+
         cbUsager.setConverter(new StringConverter<Usager>() {
             @Override
             public String toString(Usager usager) {
@@ -75,15 +75,15 @@ public class ControllerAddReservation {
                 return null;
             }
         });
-        
+
         cbUsager.setItems(controllerUsager.getUsagers());
         cbUsager.setValue(cbUsager.getItems().get(0));
     }
 
-    public void fillCbOeuvre(){
+    public void fillCbOeuvre() {
         ControllerOeuvre controllerOeuvre = new ControllerOeuvre();
         controllerOeuvre.getAllOeuvre();
-        
+
         cbOeuvre.setConverter(new StringConverter<Oeuvre>() {
             @Override
             public String toString(Oeuvre oeuvre) {
@@ -95,12 +95,12 @@ public class ControllerAddReservation {
                 return null;
             }
         });
-        
+
         cbOeuvre.setItems(controllerOeuvre.getOeuvres());
         cbOeuvre.setValue(cbOeuvre.getItems().get(0));
     }
 
-    public void confirmAdd(){
+    public void confirmAdd() {
         insertReservation();
 
         popupStage.close();
@@ -124,6 +124,7 @@ public class ControllerAddReservation {
     public int getNextIdTable() {
         HelperReservation helperReservation = new HelperReservation();
         int nextId = helperReservation.countReservations() + 1;
+        Helper.disconnect();
         return nextId;
     }
 }

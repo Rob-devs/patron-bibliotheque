@@ -25,7 +25,7 @@ public class HelperUsager extends Helper {
     // Insérer un usager
     // ***********************************************************
     public void insertUsager(Usager usager) {
-        super.execute("INSERT INTO usager (email, nom, prenom, telephone) VALUES (?, ?, ?, ?)",
+        super.executeUpdate("INSERT INTO usager (email, nom, prenom, telephone) VALUES (?, ?, ?, ?)",
                 Arrays.asList(
                         usager.getEmail(),
                         usager.getNom(),
@@ -37,7 +37,7 @@ public class HelperUsager extends Helper {
     // Modifier un usager
     // ***********************************************************
     public void updateUsager(Usager usager, String oldMail) {
-        super.execute("UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ? WHERE email = ?",
+        super.executeUpdate("UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ? WHERE email = ?",
                 Arrays.asList(
                         usager.getEmail(),
                         usager.getNom(),
@@ -50,7 +50,7 @@ public class HelperUsager extends Helper {
     // Supprimer un usager
     // ***********************************************************
     public void deleteUsager(Usager usager) {
-        super.execute("DELETE FROM usager WHERE email = ?",
+        super.executeUpdate("DELETE FROM usager WHERE email = ?",
                 Arrays.asList(usager.getEmail()));
     }
 

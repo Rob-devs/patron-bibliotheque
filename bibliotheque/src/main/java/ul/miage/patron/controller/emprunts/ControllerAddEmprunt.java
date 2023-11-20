@@ -98,7 +98,9 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
+        }
+
+        if (reservation != null) {
             helperReservation.annulerReservation(reservation);
         }
     }
@@ -135,7 +137,7 @@ public class ControllerAddEmprunt {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            helperReservation.disconnect();
+            Helper.disconnect();
         }
 
         return reservation;
@@ -161,6 +163,8 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         cbUsager.setConverter(new StringConverter<Usager>() {
@@ -200,6 +204,8 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         cbOeuvre.setConverter(new StringConverter<Oeuvre>() {
@@ -241,6 +247,8 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         cbExemplaire.setConverter(new StringConverter<Exemplaire>() {
@@ -294,6 +302,7 @@ public class ControllerAddEmprunt {
     public int getNextIdTable() {
         HelperEmprunt helperEmprunt = new HelperEmprunt();
         int nextId = helperEmprunt.countEmprunts() + 1;
+        Helper.disconnect();
         return nextId;
     }
 

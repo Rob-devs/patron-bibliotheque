@@ -274,6 +274,8 @@ public class ControllerEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         return emprunt;
