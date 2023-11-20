@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,10 +23,17 @@ import ul.miage.patron.App;
 import ul.miage.patron.controller.exemplaires.ControllerExemplaire;
 import ul.miage.patron.controller.usagers.ControllerUsager;
 import ul.miage.patron.database.helpers.HelperEmprunt;
+import ul.miage.patron.database.helpers.HelperExemplaire;
+import ul.miage.patron.database.helpers.HelperOeuvre;
+import ul.miage.patron.database.helpers.HelperUsager;
 import ul.miage.patron.model.actions.Emprunt;
 import ul.miage.patron.model.enumerations.EtatEmprunt;
+import ul.miage.patron.model.enumerations.EtatExemplaire;
+import ul.miage.patron.model.enumerations.GenreOeuvre;
 import ul.miage.patron.model.objets.Exemplaire;
+import ul.miage.patron.model.objets.Oeuvre;
 import ul.miage.patron.model.objets.Usager;
+import ul.miage.patron.model.objets.Usagers;
 
 public class ControllerEmprunt {
     @FXML
@@ -40,8 +49,15 @@ public class ControllerEmprunt {
 
     Emprunt selectedEmprunt = null;
 
+    List<Exemplaire> exemplaires = new ArrayList<Exemplaire>();
+    List<Usager> usagers = new ArrayList<Usager>();
+    List<Oeuvre> oeuvres = new ArrayList<Oeuvre>();
+
     @FXML
-    public void initialize(){
+    public void initialize() {
+        getAllOeuvre();
+        getAllExemplaire();
+        getAllUsager();
         getAllEmprunt();
         listViewEmprunt.setItems(emprunts);
         listViewEmprunt.setCellFactory(lv -> new ListCell<Emprunt>() {
@@ -51,7 +67,8 @@ public class ControllerEmprunt {
                 if (empty) {
                     setText(null);
                 } else {
-                    String text = item.getUsager().getNom() + " " + item.getUsager().getPrenom() + " - " + item.getExemplaire().getOeuvre().getTitre();
+                    String text = item.getUsager().getNom() + " " + item.getUsager().getPrenom() + " - "
+                            + item.getExemplaire().getOeuvre().getTitre();
                     setText(text);
                 }
             }
@@ -60,7 +77,7 @@ public class ControllerEmprunt {
         // Ajouter un écouteur d'événements à la ListView
         listViewEmprunt.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedEmprunt = newValue;
-            if (selectedEmprunt != null){
+            if (selectedEmprunt != null) {
                 displayDetails(); // Appeler la méthode displayDetails lorsque la sélection change
                 if (selectedEmprunt.getEtat() == EtatEmprunt.EN_COURS) {
                     btnRendre.setDisable(false);
@@ -71,9 +88,80 @@ public class ControllerEmprunt {
         });
     }
 
-    public void displayDetails(){
+    // Sélectionner tous les usagers
+    public void getAllUsager() {
+        HelperUsager helperUsager = new HelperUsager();
+
+        // Vider la liste avant de la remplir
+        if (usagers != null)
+            usagers.clear();
+
+        ResultSet resultSet = helperUsager.selectAllUsager();
+        try {
+            while (resultSet.next()) {
+                String email = resultSet.getString("email");
+                String nom = resultSet.getString("nom");
+                String prenom = resultSet.getString("prenom");
+                String telephone = resultSet.getString("telephone");
+                Usager usager = new Usager(email, nom, prenom, telephone);
+                usagers.add(usager);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Sélectionner toutes les oeuvres
+    public void getAllOeuvre() {
+        HelperOeuvre helperOeuvre = new HelperOeuvre();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Vider la liste avant de la remplir
+        if (oeuvres != null)
+            oeuvres.clear();
+
+        ResultSet resultSet = helperOeuvre.selectAllOeuvre();
+        try {
+            while (resultSet.next()) {
+                String titre = resultSet.getString("titre");
+                String auteur = resultSet.getString("auteur");
+                LocalDate datePublication = LocalDate.parse(resultSet.getString("datePublication"), formatter);
+                GenreOeuvre genreOeuvre = GenreOeuvre.valueOf(resultSet.getString("genre"));
+                int nbReservations = resultSet.getInt("nbReservations");
+                Oeuvre oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre, nbReservations);
+                oeuvres.add(oeuvre);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getAllExemplaire() {
+        HelperExemplaire helper = new HelperExemplaire();
+        ResultSet resultSet = helper.selectAllExemplaire();
+
+        // Vider la liste avant de la remplir
+        if (exemplaires != null)
+            exemplaires.clear();
+
+        try {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String etat = resultSet.getString("etat");
+                boolean disponible = resultSet.getString("disponible").toLowerCase().equals("true");
+                String titre = resultSet.getString("oeuvre");
+                Oeuvre oeuvre = (Oeuvre) oeuvres.stream().filter(o -> o.getTitre().equals(titre)).toArray()[0];
+                Exemplaire e = new Exemplaire(id, EtatExemplaire.valueOf(etat), disponible, oeuvre);
+                exemplaires.add(e);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void displayDetails() {
         Emprunt emprunt = listViewEmprunt.getSelectionModel().getSelectedItem();
-        if(emprunt != null) {
+        if (emprunt != null) {
             lblFullName.setVisible(true);
             lblFullName.setText(emprunt.getUsager().getNom() + " " + emprunt.getUsager().getPrenom());
 
@@ -91,85 +179,88 @@ public class ControllerEmprunt {
         }
     }
 
-    public void reloadListView(){
+    public void reloadListView() {
+        getAllExemplaire();
         getAllEmprunt();
         listViewEmprunt.setItems(emprunts);
     }
-
 
     // ***********************************************************
     // Emprunts
     // ***********************************************************
 
     // Sélectionner tous les emprunts
-    public void getAllEmprunt(){
+    public void getAllEmprunt() {
         HelperEmprunt helperEmprunt = new HelperEmprunt();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         // Vider la liste avant de la remplir
-        emprunts.clear();
+        if (emprunts != null)
+            emprunts.clear();
 
         ResultSet resultSet = helperEmprunt.selectAllEmprunt();
-        try{
-            while(resultSet.next()){
-                int id = resultSet.getInt("id"); 
+        try {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 LocalDate dateDebut = LocalDate.parse(resultSet.getString("dateDebut"), formatter);
                 LocalDate dateRendu = LocalDate.parse(resultSet.getString("dateRendu"), formatter);
 
                 LocalDate dateRenduReelle = null;
-                if(resultSet.getString("dateRenduReelle") != null){
+                if (resultSet.getString("dateRenduReelle") != null) {
                     dateRenduReelle = LocalDate.parse(resultSet.getString("dateRenduReelle"), formatter);
-                } 
-                
-                EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
-                
-                ControllerExemplaire controllerExemplaire = new ControllerExemplaire();
-                Exemplaire exemplaire = controllerExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
+                }
 
-                ControllerUsager controllerUsager = new ControllerUsager();
-                Usager usager = controllerUsager.selectUsager(resultSet.getString("usager"));
+                EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
+                int numExemplaire = resultSet.getInt("exemplaire");
+                String emailUsager = resultSet.getString("usager");
+
+                Exemplaire exemplaire = (Exemplaire) exemplaires.stream()
+                        .filter(o -> o.getId() == numExemplaire).toArray()[0];
+
+                Usager usager = (Usager) usagers.stream()
+                        .filter(o -> o.getEmail().equals(emailUsager)).toArray()[0];
 
                 Emprunt emprunt = null;
-                if(dateRenduReelle == null){
+                if (dateRenduReelle == null) {
                     emprunt = new Emprunt(id, dateDebut, dateRendu, exemplaire, usager);
                 } else {
                     emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
                 }
                 emprunts.add(emprunt);
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Emprunt selectEmprunt(int id){
+    public Emprunt selectEmprunt(int id) {
         HelperEmprunt helperEmprunt = new HelperEmprunt();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         ResultSet resultSet = helperEmprunt.selectEmprunt(id);
         Emprunt emprunt = null;
-        try{
-            while(resultSet.next()){
+        try {
+            while (resultSet.next()) {
                 LocalDate dateDebut = LocalDate.parse(resultSet.getString("dateDebut"));
                 LocalDate dateRendu = LocalDate.parse(resultSet.getString("dateRendu"));
                 LocalDate dateRenduReelle = null;
-                if(resultSet.getString("dateRenduReelle") != null){
+                if (resultSet.getString("dateRenduReelle") != null) {
                     dateRenduReelle = LocalDate.parse(resultSet.getString("dateRenduReelle"), formatter);
-                } 
+                }
                 EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
-                
+
                 ControllerExemplaire controllerExemplaire = new ControllerExemplaire();
                 Exemplaire exemplaire = controllerExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
 
                 ControllerUsager controllerUsager = new ControllerUsager();
                 Usager usager = controllerUsager.selectUsager(resultSet.getString("usager"));
 
-                if(dateRenduReelle == null){
+                if (dateRenduReelle == null) {
                     emprunt = new Emprunt(id, dateDebut, dateRendu, exemplaire, usager);
                 } else {
                     emprunt = new Emprunt(id, dateDebut, dateRendu, dateRenduReelle, etat, exemplaire, usager);
                 }
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -177,7 +268,7 @@ public class ControllerEmprunt {
     }
 
     // Ouvrir popup pour ajouter un emprunt
-    public void openPopupAddEmprunt(){
+    public void openPopupAddEmprunt() {
         try {
             // Charger le fichier FXML de la fenêtre pop-up
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/AjouterEmprunt.fxml"));
@@ -201,7 +292,6 @@ public class ControllerEmprunt {
             controllerAddEmprunt.fillCbOeuvre();
             controllerAddEmprunt.fillCbExemplaire();
 
-
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
             resetLabels();
@@ -211,7 +301,7 @@ public class ControllerEmprunt {
         }
     }
 
-    public void openPopupRendre(){
+    public void openPopupRendre() {
         try {
             // Charger le fichier FXML de la fenêtre pop-up
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/Rendre.fxml"));
@@ -234,7 +324,6 @@ public class ControllerEmprunt {
             controllerRendre.setSelectedEmprunt(selectedEmprunt);
             controllerRendre.fillCbEtatExemplaire();
 
-
             // Afficher la fenêtre pop-up
             popupStage.showAndWait();
             resetLabels();
@@ -244,14 +333,14 @@ public class ControllerEmprunt {
         }
     }
 
-    public void resetLabels(){
+    public void resetLabels() {
         lblFullName.setVisible(false);
         lblOeuvre.setVisible(false);
         lblDateDebut.setVisible(false);
         lblDateRendu.setVisible(false);
         lblDateRenduReelle.setVisible(false);
     }
-    
+
     // ***********************************************************
     // Navigation
     // ***********************************************************
@@ -265,21 +354,20 @@ public class ControllerEmprunt {
     }
 
     @FXML
-    public void openMenuUsager(){
-        try{
+    public void openMenuUsager() {
+        try {
             App.switchScene("MenuBack");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @FXML public void openMenuReservation(){
-        try{
+    @FXML
+    public void openMenuReservation() {
+        try {
             App.switchScene("MenuReservation");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
-
-
