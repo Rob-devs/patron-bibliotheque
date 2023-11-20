@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import ul.miage.patron.App;
 import ul.miage.patron.controller.exemplaires.ControllerExemplaire;
 import ul.miage.patron.controller.usagers.ControllerUsager;
+import ul.miage.patron.database.helpers.Helper;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.database.helpers.HelperOeuvre;
@@ -108,6 +109,8 @@ public class ControllerEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
     }
 
@@ -133,6 +136,8 @@ public class ControllerEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
     }
 
@@ -156,6 +161,8 @@ public class ControllerEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
     }
 
@@ -230,6 +237,8 @@ public class ControllerEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
     }
 
@@ -248,11 +257,14 @@ public class ControllerEmprunt {
                 }
                 EtatEmprunt etat = EtatEmprunt.valueOf(resultSet.getString("etat"));
 
-                ControllerExemplaire controllerExemplaire = new ControllerExemplaire();
-                Exemplaire exemplaire = controllerExemplaire.selectExemplaire(resultSet.getInt("exemplaire"));
+                int numExemplaire = resultSet.getInt("exemplaire");
+                String emailUsager = resultSet.getString("usager");
 
-                ControllerUsager controllerUsager = new ControllerUsager();
-                Usager usager = controllerUsager.selectUsager(resultSet.getString("usager"));
+                Exemplaire exemplaire = (Exemplaire) exemplaires.stream()
+                        .filter(o -> o.getId() == numExemplaire).toArray()[0];
+
+                Usager usager = (Usager) usagers.stream()
+                        .filter(o -> o.getEmail().equals(emailUsager)).toArray()[0];
 
                 if (dateRenduReelle == null) {
                     emprunt = new Emprunt(id, dateDebut, dateRendu, exemplaire, usager);
