@@ -19,6 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ul.miage.patron.App;
+import ul.miage.patron.database.helpers.Helper;
 import ul.miage.patron.database.helpers.HelperUsager;
 import ul.miage.patron.model.actions.Emprunt;
 import ul.miage.patron.model.objets.Usager;
@@ -33,7 +34,6 @@ public class ControllerUsager {
 
     ObservableList<Usager> usagers = FXCollections.observableArrayList();
     ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
-
 
     @FXML
     Button btnUpdate, btnDelete;
@@ -119,6 +119,8 @@ public class ControllerUsager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
     }
 
@@ -138,6 +140,8 @@ public class ControllerUsager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         return usager;
@@ -239,18 +243,19 @@ public class ControllerUsager {
     }
 
     @FXML
-    public void openMenuEmprunt(){
-        try{
+    public void openMenuEmprunt() {
+        try {
             App.switchScene("MenuEmprunt");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @FXML public void openMenuReservation(){
-        try{
+    @FXML
+    public void openMenuReservation() {
+        try {
             App.switchScene("MenuReservation");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -15,7 +15,7 @@ import ul.miage.patron.database.SQLiteConnection;
 public abstract class Helper {
 
     // Connection à la base
-    public static Connection connection;
+    public static Connection connection = null;
 
     // ***********************************************************
     // Exécution en select
@@ -25,6 +25,7 @@ public abstract class Helper {
     }
 
     public ResultSet execute(String query, List<Object> args) {
+        ResultSet resultSet = null;
         try {
             connection = SQLiteConnection.connect();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -39,14 +40,13 @@ public abstract class Helper {
                     i++;
                 }
             }
-            System.out
-                    .println(buildFormattedString(query, args));
+            System.out.println(buildFormattedString(query, args));
             preparedStatement.execute();
-            return preparedStatement.getResultSet();
+            resultSet = preparedStatement.getResultSet();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return resultSet;
     }
 
     // ***********************************************************
@@ -57,9 +57,10 @@ public abstract class Helper {
     }
 
     public void executeUpdate(String query, List<Object> args) {
+        PreparedStatement preparedStatement = null;
         try {
             connection = SQLiteConnection.connect();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query);
             if (args != null) {
                 int i = 1;
                 for (Object o : args) {
@@ -71,9 +72,8 @@ public abstract class Helper {
                     i++;
                 }
             }
-            System.out
-                    .println(buildFormattedString(query, args));
-            preparedStatement.execute();
+            System.out.println(buildFormattedString(query, args));
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -81,19 +81,11 @@ public abstract class Helper {
         }
     }
 
-    private static void disconnect() {
+    public static void disconnect() {
         try {
             if (connection != null) {
                 connection.close();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void commit() {
-        try {
-            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -20,6 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ul.miage.patron.controller.exemplaires.ControllerAddExemplaire;
+import ul.miage.patron.database.helpers.Helper;
 import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.database.helpers.HelperOeuvre;
 import ul.miage.patron.model.enumerations.EtatExemplaire;
@@ -105,11 +106,11 @@ public class ControllerOeuvre {
         return oeuvres;
     }
 
-    public ObservableList<Exemplaire> getExemplaires(){
+    public ObservableList<Exemplaire> getExemplaires() {
         return FXCollections.observableArrayList(exemplaires);
     }
 
-    public ObservableList<Exemplaire> getExemplairesDisponibles(){
+    public ObservableList<Exemplaire> getExemplairesDisponibles() {
         return FXCollections.observableArrayList(exemplairesDisponibles);
     }
 
@@ -138,6 +139,8 @@ public class ControllerOeuvre {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
     }
 
@@ -166,6 +169,8 @@ public class ControllerOeuvre {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
     }
 
@@ -186,6 +191,8 @@ public class ControllerOeuvre {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         return oeuvre;
@@ -276,18 +283,19 @@ public class ControllerOeuvre {
     }
 
     @FXML
-    public void openMenuEmprunt(){
-        try{
+    public void openMenuEmprunt() {
+        try {
             App.switchScene("MenuEmprunt");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @FXML public void openMenuReservation(){
-        try{
+    @FXML
+    public void openMenuReservation() {
+        try {
             App.switchScene("MenuReservation");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

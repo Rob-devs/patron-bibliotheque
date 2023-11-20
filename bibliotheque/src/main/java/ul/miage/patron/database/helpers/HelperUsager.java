@@ -52,7 +52,7 @@ public class HelperUsager extends Helper {
     // Supprimer un usager
     // ***********************************************************
     public void deleteUsager(Usager usager) {
-        super.execute("DELETE FROM usager WHERE email = ?",
+        super.executeUpdate("DELETE FROM usager WHERE email = ?",
                 Arrays.asList(usager.getEmail()));
     }
 

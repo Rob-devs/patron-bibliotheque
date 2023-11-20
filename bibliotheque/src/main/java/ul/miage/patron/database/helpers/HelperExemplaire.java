@@ -44,13 +44,13 @@ public class HelperExemplaire extends Helper {
                         exemplaire.getId()));
     }
 
-    public void switchDisponible(Exemplaire exemplaire){
-        if(Boolean.toString(exemplaire.isDisponible()).equals("true")){
+    public void switchDisponible(Exemplaire exemplaire) {
+        if (Boolean.toString(exemplaire.isDisponible()).equals("true")) {
             super.executeUpdate("UPDATE exemplaire SET disponible = ? WHERE id = ?",
                     Arrays.asList(
                             "false",
                             exemplaire.getId()));
-        }else{
+        } else {
             super.executeUpdate("UPDATE exemplaire SET disponible = ? WHERE id = ?",
                     Arrays.asList(
                             "true",
@@ -58,7 +58,7 @@ public class HelperExemplaire extends Helper {
         }
     }
 
-    public void updateEtat(Exemplaire exemplaire){
+    public void updateEtat(Exemplaire exemplaire) {
         super.executeUpdate("UPDATE exemplaire SET etat = ? WHERE id = ?",
                 Arrays.asList(
                         exemplaire.getEtat().toString(),
