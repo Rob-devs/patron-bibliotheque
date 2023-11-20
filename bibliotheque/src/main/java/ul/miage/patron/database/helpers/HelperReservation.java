@@ -30,7 +30,7 @@ public class HelperReservation extends Helper {
     public void insertReservation(Reservation reservation) {
         String dateDebut = reservation.getDateDebut().getDayOfMonth() + "/"
                 + reservation.getDateDebut().getMonthValue() + "/" + reservation.getDateDebut().getYear();
-        
+
         // Formatter la date avec le nouveau modèle
         String formattedDateDebut = super.convertFormatDate(dateDebut);
 
