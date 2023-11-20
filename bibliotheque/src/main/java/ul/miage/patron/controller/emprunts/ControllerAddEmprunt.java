@@ -11,6 +11,7 @@ import javafx.util.StringConverter;
 import ul.miage.patron.controller.oeuvres.ControllerOeuvre;
 import ul.miage.patron.controller.reservations.ControllerReservation;
 import ul.miage.patron.controller.usagers.ControllerUsager;
+import ul.miage.patron.database.helpers.Helper;
 import ul.miage.patron.database.helpers.HelperEmprunt;
 import ul.miage.patron.database.helpers.HelperExemplaire;
 import ul.miage.patron.database.helpers.HelperOeuvre;
@@ -67,6 +68,8 @@ public class ControllerAddEmprunt {
 
     public void insertEmprunt() {
 
+        Reservation reservation = null;
+
         HelperReservation helperReservation = new HelperReservation();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -82,22 +85,23 @@ public class ControllerAddEmprunt {
                 cbUsager.getValue());
 
         HelperEmprunt helperEmprunt = new HelperEmprunt();
+        helperEmprunt.insertEmprunt(emprunt);
+
         HelperExemplaire helperExemplaire = new HelperExemplaire();
+        helperExemplaire.switchDisponible(emprunt.getExemplaire());
 
-        // Use try-with-resources to ensure proper resource closure
-        try (
-                ResultSet resultSetReservation = helperReservation.getExistingReservation(cbUsager.getValue(),
-                        cbOeuvre.getValue())) {
-            helperEmprunt.insertEmprunt(emprunt);
-            helperExemplaire.switchDisponible(emprunt.getExemplaire());
-
+        try {
+            ResultSet resultSetReservation = helperReservation.getExistingReservation(cbUsager.getValue(),
+                    cbOeuvre.getValue());
             if (resultSetReservation.next()) {
-                Reservation reservation = selectReservation(resultSetReservation.getInt("id"));
-                helperReservation.commit();
-                helperReservation.annulerReservation(reservation);
+                reservation = selectReservation(resultSetReservation.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        if (reservation != null) {
+            helperReservation.annulerReservation(reservation);
         }
     }
 
@@ -132,6 +136,8 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         return reservation;
@@ -157,6 +163,8 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         cbUsager.setConverter(new StringConverter<Usager>() {
@@ -196,6 +204,8 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         cbOeuvre.setConverter(new StringConverter<Oeuvre>() {
@@ -237,6 +247,8 @@ public class ControllerAddEmprunt {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Helper.disconnect();
         }
 
         cbExemplaire.setConverter(new StringConverter<Exemplaire>() {
@@ -290,6 +302,7 @@ public class ControllerAddEmprunt {
     public int getNextIdTable() {
         HelperEmprunt helperEmprunt = new HelperEmprunt();
         int nextId = helperEmprunt.countEmprunts() + 1;
+        Helper.disconnect();
         return nextId;
     }
 
