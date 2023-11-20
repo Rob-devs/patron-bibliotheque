@@ -43,6 +43,7 @@ public class ControllerOeuvre {
     Oeuvre selectedOeuvre = null;
 
     List<Exemplaire> exemplaires = new ArrayList<Exemplaire>();
+    List<Exemplaire> exemplairesDisponibles = new ArrayList<Exemplaire>();
 
     @FXML
     public void initialize() {
@@ -100,6 +101,18 @@ public class ControllerOeuvre {
         btnAddExemplaire.setDisable(true);
     }
 
+    public ObservableList<Oeuvre> getOeuvres() {
+        return oeuvres;
+    }
+
+    public ObservableList<Exemplaire> getExemplaires(){
+        return FXCollections.observableArrayList(exemplaires);
+    }
+
+    public ObservableList<Exemplaire> getExemplairesDisponibles(){
+        return FXCollections.observableArrayList(exemplairesDisponibles);
+    }
+
     // ***********************************************************
     // Oeuvres
     // ***********************************************************
@@ -119,7 +132,8 @@ public class ControllerOeuvre {
                 String auteur = resultSet.getString("auteur");
                 LocalDate datePublication = LocalDate.parse(resultSet.getString("datePublication"), formatter);
                 GenreOeuvre genreOeuvre = GenreOeuvre.valueOf(resultSet.getString("genre"));
-                Oeuvre oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre);
+                int nbReservations = resultSet.getInt("nbReservations");
+                Oeuvre oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre, nbReservations);
                 oeuvres.add(oeuvre);
             }
         } catch (SQLException e) {
@@ -129,12 +143,12 @@ public class ControllerOeuvre {
 
     // Sélectionner tous les exemplaires de l'oeuvre
     public void getAllExemplaires(Oeuvre oeuvre) {
-
         HelperExemplaire helper = new HelperExemplaire();
         ResultSet resultSet = helper.selectAllExemplaire();
 
         // Vider la liste avant de la remplir
         exemplaires.clear();
+        exemplairesDisponibles.clear();
 
         try {
             while (resultSet.next()) {
@@ -143,9 +157,11 @@ public class ControllerOeuvre {
                 boolean disponible = resultSet.getString("disponible").toLowerCase().equals("true");
                 String titre = resultSet.getString("oeuvre");
                 if (titre.equals(oeuvre.getTitre())) {
-                    Exemplaire e = new Exemplaire(id, EtatExemplaire.valueOf(etat), oeuvre);
-                    e.setDisponible(disponible);
+                    Exemplaire e = new Exemplaire(id, EtatExemplaire.valueOf(etat), disponible, oeuvre);
                     exemplaires.add(e);
+                    if (e.isDisponible()) {
+                        exemplairesDisponibles.add(e);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -156,15 +172,17 @@ public class ControllerOeuvre {
     // Sélectionner une oeuvre
     public Oeuvre selectOeuvre(String titre) {
         HelperOeuvre helperOeuvre = new HelperOeuvre();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         ResultSet resultSet = helperOeuvre.selectOeuvre(titre);
         Oeuvre oeuvre = null;
         try {
             while (resultSet.next()) {
                 String auteur = resultSet.getString("auteur");
-                LocalDate datePublication = resultSet.getDate("datePublication").toLocalDate();
+                LocalDate datePublication = LocalDate.parse(resultSet.getString("datePublication"), formatter);
                 GenreOeuvre genreOeuvre = GenreOeuvre.valueOf(resultSet.getString("genre"));
-                oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre);
-                oeuvres.add(oeuvre);
+                int nbReservations = resultSet.getInt("nbReservations");
+                oeuvre = new Oeuvre(titre, auteur, datePublication, genreOeuvre, nbReservations);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -248,10 +266,28 @@ public class ControllerOeuvre {
     // ***********************************************************
     // Navigation
     // ***********************************************************
+    @FXML
     public void openMenuUsager() {
         try {
             App.switchScene("MenuBack");
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openMenuEmprunt(){
+        try{
+            App.switchScene("MenuEmprunt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML public void openMenuReservation(){
+        try{
+            App.switchScene("MenuReservation");
+        } catch (Exception e){
             e.printStackTrace();
         }
     }

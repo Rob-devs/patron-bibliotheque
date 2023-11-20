@@ -43,4 +43,25 @@ public class HelperExemplaire extends Helper {
                         exemplaire.getOeuvre().getTitre(),
                         exemplaire.getId()));
     }
+
+    public void switchDisponible(Exemplaire exemplaire){
+        if(Boolean.toString(exemplaire.isDisponible()).equals("true")){
+            super.executeUpdate("UPDATE exemplaire SET disponible = ? WHERE id = ?",
+                    Arrays.asList(
+                            "false",
+                            exemplaire.getId()));
+        }else{
+            super.executeUpdate("UPDATE exemplaire SET disponible = ? WHERE id = ?",
+                    Arrays.asList(
+                            "true",
+                            exemplaire.getId()));
+        }
+    }
+
+    public void updateEtat(Exemplaire exemplaire){
+        super.executeUpdate("UPDATE exemplaire SET etat = ? WHERE id = ?",
+                Arrays.asList(
+                        exemplaire.getEtat().toString(),
+                        exemplaire.getId()));
+    }
 }

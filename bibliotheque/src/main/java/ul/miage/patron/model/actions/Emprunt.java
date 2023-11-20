@@ -4,28 +4,33 @@ import ul.miage.patron.model.enumerations.EtatEmprunt;
 import ul.miage.patron.model.objets.Exemplaire;
 import ul.miage.patron.model.objets.Usager;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Emprunt {
 
     private int id;
-    private Date dateDebut;
-    private Date dateRendu;
-    private Date dateRenduReelle;
+    private LocalDate dateDebut;
+    private LocalDate dateRendu;
+    private LocalDate dateRenduReelle;
     private EtatEmprunt etat;
     private Exemplaire exemplaire;
     private Usager usager;
 
-    public Emprunt(Date dateDebut, Date dateRendu) {
+    public Emprunt(int id, LocalDate dateDebut, LocalDate dateRendu, Exemplaire exemplaire, Usager usager) {
+        this.id = id;
         this.dateDebut = dateDebut;
         this.dateRendu = dateRendu;
         this.etat = EtatEmprunt.EN_COURS;
+        this.exemplaire = exemplaire;
+        this.usager = usager;
     }
 
-    public Emprunt(int id, Date dateDebut, Date dateRendu, Date dateRenduRelle, EtatEmprunt etat, Exemplaire exemplaire,
+    public Emprunt(int id, LocalDate dateDebut, LocalDate dateRendu, LocalDate dateRenduRelle, EtatEmprunt etat, Exemplaire exemplaire,
             Usager usager) {
+        this.id = id;
         this.dateDebut = dateDebut;
         this.dateRendu = dateRendu;
+        this.dateRenduReelle = dateRenduRelle;
         this.etat = etat;
         this.exemplaire = exemplaire;
         this.usager = usager;
@@ -39,27 +44,27 @@ public class Emprunt {
         this.id = id;
     }
 
-    public Date getDateDebut() {
+    public LocalDate getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateRendu() {
+    public LocalDate getDateRendu() {
         return dateRendu;
     }
 
-    public void setDateRendu(Date dateRendu) {
+    public void setDateRendu(LocalDate dateRendu) {
         this.dateRendu = dateRendu;
     }
 
-    public Date getDateRenduReelle() {
+    public LocalDate getDateRenduReelle() {
         return dateRenduReelle;
     }
 
-    public void setDateRenduReelle(Date dateRenduReelle) {
+    public void setDateRenduReelle(LocalDate dateRenduReelle) {
         this.dateRenduReelle = dateRenduReelle;
     }
 
