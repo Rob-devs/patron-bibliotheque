@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ul.miage.patron.controller.backoffice.usagers.ControllerAddUsager">
+    <children>
+        <AnchorPane prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #34495E;">
+            <children>
+                <VBox alignment="CENTER" layoutX="25.0" layoutY="25.0" spacing="10">
+                    <Label text="Créer un usager" textFill="#ECF0F1">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </Label>
+
+                    <HBox spacing="10">
+                        <Label text="Nom:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+                    </HBox>
+                    <HBox spacing="10">
+                        <TextField fx:id="tfNom" promptText="Nom" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Label text="Prénom:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+                    </HBox>
+                    <HBox spacing="10">
+                        <TextField fx:id="tfPrenom" promptText="Prénom" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Label text="Adresse mail:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+                    </HBox>
+                    <HBox spacing="10">
+                        <TextField fx:id="tfMail" promptText="Adresse mail" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Label text="Téléphone:" style="-fx-font-size: 14px; -fx-text-fill: #ECF0F1;" />
+                    </HBox>
+                    <HBox spacing="10">
+                        <TextField fx:id="tfTelephone" promptText="Téléphone" style="-fx-font-size: 14px; -fx-pref-width: 200px;" />
+                    </HBox>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Button fx:id="btnConfirm" disable="true" mnemonicParsing="false" onAction="#confirmAdd" text="Confirmer" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                        <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#close" text="Annuler" style="-fx-background-color: #F44336; -fx-text-fill: white;" />
+                    </HBox>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
