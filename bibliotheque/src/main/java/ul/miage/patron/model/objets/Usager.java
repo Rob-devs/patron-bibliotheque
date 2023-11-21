@@ -8,12 +8,12 @@ public class Usager {
     private String telephone;
     private int penalites;
 
-    public Usager(String email, String nom, String prenom, String telephone) {
+    public Usager(String email, String nom, String prenom, String telephone, int penalites) {
         this.email = email;
         this.prenom = nom;
         this.nom = prenom;
         this.telephone = telephone;
-        this.penalites = 0;
+        this.penalites = penalites;
     }
 
     public String getNom() {

@@ -25,24 +25,26 @@ public class HelperUsager extends Helper {
     // Insérer un usager
     // ***********************************************************
     public void insertUsager(Usager usager) {
-        super.executeUpdate("INSERT INTO usager (email, nom, prenom, telephone) VALUES (?, ?, ?, ?)",
+        super.execute("INSERT INTO usager (email, nom, prenom, telephone, penalites) VALUES (?, ?, ?, ?, ?)",
                 Arrays.asList(
                         usager.getEmail(),
                         usager.getNom(),
                         usager.getPrenom(),
-                        usager.getTelephone()));
+                        usager.getTelephone(),
+                        usager.getPenalites()));
     }
 
     // ***********************************************************
     // Modifier un usager
     // ***********************************************************
     public void updateUsager(Usager usager, String oldMail) {
-        super.executeUpdate("UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ? WHERE email = ?",
+        super.execute("UPDATE usager SET email = ?, nom = ?, prenom = ?, telephone = ?, penalites = ? WHERE email = ?",
                 Arrays.asList(
                         usager.getEmail(),
                         usager.getNom(),
                         usager.getPrenom(),
                         usager.getTelephone(),
+                        usager.getPenalites(),
                         oldMail));
     }
 
@@ -51,6 +53,22 @@ public class HelperUsager extends Helper {
     // ***********************************************************
     public void deleteUsager(Usager usager) {
         super.executeUpdate("DELETE FROM usager WHERE email = ?",
+                Arrays.asList(usager.getEmail()));
+    }
+
+    // ***********************************************************
+    // Incrémenter le nombre de pénalités
+    // ***********************************************************
+    public void incrementPenalites(Usager usager) {
+        super.executeUpdate("UPDATE usager SET penalites = penalites + 1 WHERE email = ?",
+                Arrays.asList(usager.getEmail()));
+    }
+
+    // ***********************************************************
+    // Décrémenter le nombre de pénalités
+    // ***********************************************************
+    public void decrementPenalites(Usager usager) {
+        super.executeUpdate("UPDATE usager SET penalites = penalites - 1 WHERE email = ?",
                 Arrays.asList(usager.getEmail()));
     }
 

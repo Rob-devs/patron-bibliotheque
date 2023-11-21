@@ -18,14 +18,14 @@ public class App extends Application {
 
 		primaryStage = stage;
 
-		loadAndSetScene("MenuBack");
+		loadAndSetScene("backoffice/MenuBack");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 
 	private static void loadAndSetScene(String fxml) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/vue/" + fxml + ".fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/ihm/" + fxml + ".fxml"));
 		Parent root = fxmlLoader.load();
 
 		// Set the scene
