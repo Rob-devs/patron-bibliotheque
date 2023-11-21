@@ -13,6 +13,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Le code source en UTF8 -->
     <project.build.sourceEnconding>UTF8</project.build.sourceEnconding>
+    <!-- Où stocker la distribution binaire -->
+    <projet.bindist.dir>${project.basedir}</projet.bindist.dir>
     <!-- Nom de la classe principale -->
     <project.main.classname>${project.groupId}.Launcher</project.main.classname>
     <!-- Nom de la classe principale -->
@@ -113,6 +115,33 @@
           <mainClass>${project.main.classname}</mainClass>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.6.0</version>
+        <configuration>
+            <archive>
+                <manifest>
+                    <mainClass>ul.miage.patron.Launcher</mainClass>
+                </manifest>
+            </archive>
+            <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+        </configuration>
+        <executions>
+            <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                    <goal>single</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+
+  
     </plugins>
   </build>
 </project>

@@ -13,6 +13,8 @@ public class SQLiteConnection {
             if (connection == null || connection.isClosed()) {
                 // Charger le driver SQLite
                 String filePath = "bibliotheque/src/main/resources/bibliotheque.db";
+                // A décommenter si vous exécutez un maven install
+                //String filePath = "../src/main/resources/bibliotheque.db"; 
                 Class.forName("org.sqlite.JDBC");
 
                 // Établir la connexion
